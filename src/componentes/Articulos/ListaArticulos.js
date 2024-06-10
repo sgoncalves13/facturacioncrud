@@ -8,18 +8,25 @@ function Articulos() {
 
     const [articulos, setArticulos] = useState([])
 
+    const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
+
     async function fetchData() {
         try {
-          const response = await fetch('https://localhost:7207/api/Articulo/GetAll');
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          const jsonData = await response.json();
-          setArticulos(jsonData)
+            const response = await fetch('https://localhost:7207/api/Articulo/GetAll', {
+                headers: {
+                    'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const jsonData = await response.json();
+            setArticulos(jsonData);
         } catch (error) {
-          console.error('Error:', error.message);
+            console.error('Error:', error.message);
         }
     }
+    
 
     useEffect(() => {
         fetchData();
@@ -46,6 +53,7 @@ function Articulos() {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
             },
             body: JSON.stringify(articulo_delete),
         });

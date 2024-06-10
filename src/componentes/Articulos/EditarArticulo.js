@@ -5,6 +5,8 @@ function EditarArticulo() {
   const articulo_editar = JSON.parse(localStorage.getItem("articulo_editar"));
   let navigate = useNavigate();
 
+  const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
+
   const [descripcion, setDescripcion] = useState(articulo_editar.descripcion);
   const [descripcion_compra, setDescripcion_compra] = useState(articulo_editar.descripcion_compra);
   const [descripcion_venta, setDescripcion_venta] = useState(articulo_editar.descripcion_venta);
@@ -19,6 +21,7 @@ function EditarArticulo() {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
       },
       body: JSON.stringify(articulo_editar),
     });

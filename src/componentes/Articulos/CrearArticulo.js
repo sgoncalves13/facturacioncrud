@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-route
 function CrearArticulo(){
     let navigate = useNavigate();
 
+    const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
+
     const[descripcion, setDescripcion] = useState('')
 
     const[descripcionCompra, setDescripcionCompra] = useState('')
@@ -38,6 +40,7 @@ function CrearArticulo(){
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
         },
         body: JSON.stringify(articulo),
         });
