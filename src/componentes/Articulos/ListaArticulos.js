@@ -20,23 +20,6 @@ function Articulos() {
     const [quantityPerPage, setQuantityPerPage] = useState(5);
 
     const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
-
-    async function fetchData() {
-        try {
-            const response = await fetch('https://localhost:7207/api/Articulo/GetAll', {
-                headers: {
-                    'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
-                }
-            });
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const jsonData = await response.json();
-            setArticulos(jsonData);
-        } catch (error) {
-            console.error('Error:', error.message);
-        }
-    }
     
     async function fetchArticulos(page, quantityPerPage) {
         try {
@@ -58,7 +41,6 @@ function Articulos() {
     }
 
     useEffect(() => {
-        //fetchData();
         fetchArticulos(currentPage, quantityPerPage);
       }, [currentPage, quantityPerPage]); 
 
@@ -90,7 +72,7 @@ function Articulos() {
 
         if (response.ok) {
             alert('Artículo con id: ' +String(articulo_del.id)+ ' eliminado exitosamente');
-            fetchData();
+            fetchArticulos(currentPage, quantityPerPage);
         } else {
             console.error('Error al eliminar el artículo');
         }
@@ -111,7 +93,7 @@ function Articulos() {
       };
     
       const decrement = () => {
-        setQuantityPerPage((prevValue) => Math.max(prevValue - 5, 0));
+        setQuantityPerPage((prevValue) => Math.max(prevValue - 5, 5));
       };  
       
 
