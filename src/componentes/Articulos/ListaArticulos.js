@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import '../../CSS/ListaArticulos.css'
+import PaginationArticulos from "./PaginationArticulos";
 
 function Articulos() {
 
     let navigate = useNavigate();
 
     const [articulos, setArticulos] = useState([])
+
+    const [articulosPrueba, setArticulosPrueba] = useState([])
+
+    const [count, setCount] = useState(null)
+
+    const [countPages, SetCountPages] = useState(null)
+
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const [quantityPerPage, setQuantityPerPage] = useState(5);
 
     const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
 
@@ -27,10 +38,29 @@ function Articulos() {
         }
     }
     
+    async function fetchArticulos(page, quantityPerPage) {
+        try {
+            const response = await fetch(`https://localhost:7207/api/Articulo/GetAllPage?Page=${page}&QuantityPerPage=${quantityPerPage}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const jsonData = await response.json();
+            setArticulosPrueba(jsonData.listArticulos);
+            setCount(jsonData.count)
+            SetCountPages(jsonData.countPages)
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
 
     useEffect(() => {
-        fetchData();
-      }, []); 
+        //fetchData();
+        fetchArticulos(currentPage, quantityPerPage);
+      }, [currentPage, quantityPerPage]); 
 
     const handleEdit = (articulo_editar) => {
         localStorage.setItem("articulo_editar", JSON.stringify(articulo_editar))
@@ -70,13 +100,29 @@ function Articulos() {
     const irCrearArticulo = () => {
         navigate('/CrearArticulo')
     }
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+      };
+    
+
+      const increment = () => {
+        setQuantityPerPage((prevValue) => prevValue + 5);
+      };
+    
+      const decrement = () => {
+        setQuantityPerPage((prevValue) => Math.max(prevValue - 5, 0));
+      };  
       
 
     return (
         <div className="dsad">
         <button onClick={irCrearArticulo}>Crear Artículo</button>
+        <button onClick={decrement}>-5</button>
+        <input type="text" value={quantityPerPage} readOnly />
+        <button onClick={increment}>+5</button>
         <div className="Listado_Articulos">
-            {articulos.length > 0 ? (
+            {articulosPrueba.length > 0 ? (
                 <table className="table">
                     <thead>
                         <tr>
@@ -88,7 +134,7 @@ function Articulos() {
                         </tr>
                     </thead>
                     <tbody>
-                        {articulos.map((articulo) => (
+                        {articulosPrueba.map((articulo) => (
                             <tr key={articulo.id}>
                                 <td>{articulo.id}</td>
                                 <td>{articulo.fecha_ins}</td>
@@ -105,6 +151,9 @@ function Articulos() {
             ) : (
                 <p>Cargando...</p>
             )}
+            <div className="Pagination">
+            <PaginationArticulos totalPages={countPages} currentPage={currentPage} onPageChange={handlePageChange} />
+            </div>
         </div>
       </div>
     );
