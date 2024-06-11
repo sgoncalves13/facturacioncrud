@@ -32,7 +32,9 @@ function EditarArticulo() {
       navigate('/Articulos');
 
     } else {
-        alert('Error al actualizar el articulo con id: ' + String(articulo_editar.id))
+      const errorText = await response.text();
+      console.error('Error:', errorText);
+      alert('Error al actualizar el articulo con id: ' + String(articulo_editar.id) + '. Detalles: ' + errorText);
     }
   };
 

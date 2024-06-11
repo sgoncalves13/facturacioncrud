@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../../CSS/ListaArticulos.css'
 import PaginationArticulos from "./PaginationArticulos";
 
@@ -8,8 +8,6 @@ function Articulos() {
     let navigate = useNavigate();
 
     const [articulos, setArticulos] = useState([])
-
-    const [articulosPrueba, setArticulosPrueba] = useState([])
 
     const [count, setCount] = useState(null)
 
@@ -32,7 +30,7 @@ function Articulos() {
                 throw new Error('Network response was not ok');
             }
             const jsonData = await response.json();
-            setArticulosPrueba(jsonData.listArticulos);
+            setArticulos(jsonData.listArticulos);
             setCount(jsonData.count)
             SetCountPages(jsonData.countPages)
         } catch (error) {
@@ -74,7 +72,10 @@ function Articulos() {
             alert('Artículo con id: ' +String(articulo_del.id)+ ' eliminado exitosamente');
             fetchArticulos(currentPage, quantityPerPage);
         } else {
-            console.error('Error al eliminar el artículo');
+            const errorText = await response.text();
+            console.error('Error:', errorText);
+            alert('Error al eliminar el articulo con id: ' + String(articulo_del.id) + '. Detalles: ' + errorText);
+            fetchArticulos(currentPage, quantityPerPage);
         }
     }
     };
@@ -104,7 +105,7 @@ function Articulos() {
         <input type="text" value={quantityPerPage} readOnly />
         <button onClick={increment}>+5</button>
         <div className="Listado_Articulos">
-            {articulosPrueba.length > 0 ? (
+            {articulos.length > 0 ? (
                 <table className="table">
                     <thead>
                         <tr>
@@ -116,7 +117,7 @@ function Articulos() {
                         </tr>
                     </thead>
                     <tbody>
-                        {articulosPrueba.map((articulo) => (
+                        {articulos.map((articulo) => (
                             <tr key={articulo.id}>
                                 <td>{articulo.id}</td>
                                 <td>{articulo.fecha_ins}</td>
