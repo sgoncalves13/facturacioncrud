@@ -21,7 +21,6 @@ function CrearArticulo(){
         event.preventDefault();
 
         const articulo = {
-            usu_ins_id: 1,
             usu_mod_id: null,
             inactivo: false,
             unid_id: 1,

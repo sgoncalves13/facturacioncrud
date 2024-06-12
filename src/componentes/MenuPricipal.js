@@ -20,7 +20,7 @@ function MenuPrincipal() {
         const tokenKey = `${activeAccount.idTokenClaims.oid}.${activeAccount.idTokenClaims.tid}-login.windows.net-idtoken-${activeAccount.idTokenClaims.aud}-${activeAccount.idTokenClaims.tid}---`;
         const idToken = JSON.parse(localStorage.getItem(tokenKey));
         localStorage.setItem('idToken', idToken.secret)
-        console.log(idToken.secret)
+        //console.log(idToken.secret)
         return idToken.secret;
       };
 

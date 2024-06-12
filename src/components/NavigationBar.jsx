@@ -16,11 +16,31 @@ export const NavigationBar = () => {
         activeAccount = instance.getActiveAccount();
     }
 
+    const handleLoginRedirect = () => {
+        /**
+         * When using popup and silent APIs, we recommend setting the redirectUri to a blank page or a page 
+         * that does not implement MSAL. Keep in mind that all redirect routes must be registered with the application
+         * For more information, please follow this link: https://github.com/AzureAD/microsoft-authentication-library-for-js/blob/dev/lib/msal-browser/docs/login-user.md#redirecturi-considerations 
+         */
+
+        instance.loginRedirect(loginRequest)
+            .catch((error) => console.log(error));
+    };
+
     const handleLoginPopup = () => {
         instance.loginPopup({
             ...loginRequest,
             redirectUri: '/'
         }).catch((error) => console.log(error));
+    };
+
+    const handleLogoutRedirect = () => {
+        let account = instance.getActiveAccount();
+        clearStorage(account);
+
+        instance.logoutRedirect({
+            account: instance.getActiveAccount(),
+        });
     };
 
     const handleLogoutPopup = () => {
@@ -50,10 +70,10 @@ export const NavigationBar = () => {
                 </a>
                 <AuthenticatedTemplate>
                     <Nav.Link className="navbarButton" href="/Menu">
-                        Menu
+                        Menu Principal
                     </Nav.Link>
-                    <Nav.Link className="navbarButton" href="/contacts">
-                        Contacts
+                    <Nav.Link className="navbarButton" href="/profile">
+                        Perfil
                     </Nav.Link>
                     <div className="collapse navbar-collapse justify-content-end">
                         <DropdownButton

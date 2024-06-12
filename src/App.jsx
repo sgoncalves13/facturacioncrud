@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate  } from 'react-router-dom';
 import { MsalProvider } from '@azure/msal-react';
 import { useMsal } from '@azure/msal-react';
 
@@ -13,19 +13,42 @@ import Articulos from './componentes/Articulos/ListaArticulos';
 import CrearArticulo from './componentes/Articulos/CrearArticulo';
 import EditarArticulo from './componentes/Articulos/EditarArticulo';
 
-const Pages = () => {
+const ProtectedRoute = ({ children }) => {
     const { instance } = useMsal();
     const activeAccount = instance.getActiveAccount();
-    const navigate = useNavigate();
+
+    return activeAccount ? children : <Navigate to="/" />;
+};
+
+const Pages = () => {
     return (
-        <Routes>
+<Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/profile" element={activeAccount ? <Profile /> : navigate('/')} />
-            <Route path="/contacts" element={activeAccount ? <Contacts /> : navigate('/')} />
-            <Route path="/Menu" element={activeAccount ? <MenuPrincipal /> : navigate('/')} />
-            <Route path="/Articulos" element={activeAccount ? <Articulos /> : navigate('/')} />
-            <Route path="/CrearArticulo" element={activeAccount ? <CrearArticulo /> : navigate('/')} />
-            <Route path="/EditarArticulo/:idArticulo" element={activeAccount ? <EditarArticulo /> : navigate('/')} />
+            <Route path="/profile" element={
+                <ProtectedRoute>
+                    <Profile />
+                </ProtectedRoute>
+            } />
+            <Route path="/Menu" element={
+                <ProtectedRoute>
+                    <MenuPrincipal />
+                </ProtectedRoute>
+            } />
+            <Route path="/Articulos" element={
+                <ProtectedRoute>
+                    <Articulos />
+                </ProtectedRoute>
+            } />
+            <Route path="/CrearArticulo" element={
+                <ProtectedRoute>
+                    <CrearArticulo />
+                </ProtectedRoute>
+            } />
+            <Route path="/EditarArticulo/:idArticulo" element={
+                <ProtectedRoute>
+                    <EditarArticulo />
+                </ProtectedRoute>
+            } />
         </Routes>
     );
 };
@@ -48,4 +71,3 @@ const App = ({ instance }) => {
 };
 
 export default App;
-

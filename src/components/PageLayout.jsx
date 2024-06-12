@@ -12,14 +12,10 @@ export const PageLayout = (props) => {
         <>
             <NavigationBar />
             <br />
-            <h5>
-            </h5>
             <br />
             {props.children}
             <br />
             <AuthenticatedTemplate>
-                <footer>
-                </footer>
             </AuthenticatedTemplate>
         </>
     );
