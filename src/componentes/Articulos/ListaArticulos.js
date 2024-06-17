@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import '../../CSS/ListaArticulos.css'
 import PaginationArticulos from "./PaginationArticulos";
+import generatePDF from "../../ReportGenerator";
+import ExportExcel from "../../ExportExcel";
 
 function Articulos() {
 
@@ -16,6 +18,8 @@ function Articulos() {
     const [currentPage, setCurrentPage] = useState(1);
 
     const [quantityPerPage, setQuantityPerPage] = useState(5);
+
+    const [articulosReport, setArticulosReport] = useState([])
 
     const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
     
@@ -96,11 +100,49 @@ function Articulos() {
       const decrement = () => {
         setQuantityPerPage((prevValue) => Math.max(prevValue - 5, 5));
       };  
-      
 
+    async function generateReport() {
+        try {
+            const response = await fetch(`https://localhost:7207/api/Articulo/GetAll`, {
+                headers: {
+                    'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const jsonData = await response.json();
+            generatePDF(jsonData);
+            console.log(jsonData)
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
+
+    async function generateReportExcel() {
+        try {
+            const response = await fetch(`https://localhost:7207/api/Articulo/GetAll`, {
+                headers: {
+                    'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const jsonData = await response.json();
+            ExportExcel(jsonData);
+            //console.log(jsonData)
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
+    }
+        
     return (
         <div className="dsad">
+        <button onClick={generateReport}>Generar reporte</button>
+        <button onClick={generateReportExcel}>Generar reporte excel</button>
         <button onClick={irCrearArticulo}>Crear Artículo</button>
+
         <button onClick={decrement}>-5</button>
         <input type="text" value={quantityPerPage} readOnly />
         <button onClick={increment}>+5</button>
