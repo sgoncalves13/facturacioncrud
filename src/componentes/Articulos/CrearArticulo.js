@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import environment from "../../../src/environment.json"
 
 function CrearArticulo(){
     let navigate = useNavigate();
@@ -35,7 +36,7 @@ function CrearArticulo(){
             tipo_mov: 1
         };
     
-        const response = await fetch('https://localhost:7207/api/Articulo/CreateArticulo', {
+        const response = await fetch(`${environment.baseUrl}/Articulo/CreateArticulo`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import environment from "../../../src/environment.json"
 
 function EditarArticulo() {
   const articulo_editar = JSON.parse(localStorage.getItem("articulo_editar"));
@@ -17,7 +18,7 @@ function EditarArticulo() {
     articulo_editar.descripcion_compra = descripcion_compra;
     articulo_editar.descripcion_venta = descripcion_venta;
 
-    const response = await fetch(`https://localhost:7207/api/Articulo/UpdateArticulo`, {
+    const response = await fetch(`${environment.baseUrl}/Articulo/UpdateArticulo`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

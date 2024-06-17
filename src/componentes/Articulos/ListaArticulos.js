@@ -4,6 +4,7 @@ import '../../CSS/ListaArticulos.css'
 import PaginationArticulos from "./PaginationArticulos";
 import generatePDF from "../../ReportGenerator";
 import ExportExcel from "../../ExportExcel";
+import environment from "../../../src/environment.json"
 
 function Articulos() {
 
@@ -25,7 +26,7 @@ function Articulos() {
     
     async function fetchArticulos(page, quantityPerPage) {
         try {
-            const response = await fetch(`https://localhost:7207/api/Articulo/GetAllPage?Page=${page}&QuantityPerPage=${quantityPerPage}`, {
+            const response = await fetch(`${environment.baseUrl}/Articulo/GetAllPage?Page=${page}&QuantityPerPage=${quantityPerPage}`, {
                 headers: {
                     'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
                 }
@@ -63,7 +64,7 @@ function Articulos() {
         }
         console.log(articulo_delete)
         if (isConfirmed) {
-        const response = await fetch(`https://localhost:7207/api/Articulo/DeleteArticulo`, {
+        const response = await fetch(`${environment.baseUrl}/Articulo/DeleteArticulo`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -103,7 +104,7 @@ function Articulos() {
 
     async function generateReport() {
         try {
-            const response = await fetch(`https://localhost:7207/api/Articulo/GetAll`, {
+            const response = await fetch(`${environment.baseUrl}/Articulo/GetAll`, {
                 headers: {
                     'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
                 }
@@ -121,7 +122,7 @@ function Articulos() {
 
     async function generateReportExcel() {
         try {
-            const response = await fetch(`https://localhost:7207/api/Articulo/GetAll`, {
+            const response = await fetch(`${environment.baseUrl}/Articulo/GetAll`, {
                 headers: {
                     'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
                 }
