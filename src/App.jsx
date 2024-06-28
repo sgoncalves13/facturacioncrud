@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate  } from 'react-router-dom';
 import { MsalProvider } from '@azure/msal-react';
 import { useMsal } from '@azure/msal-react';
+import { AnimatePresence } from 'framer-motion';
 
 import { PageLayout } from './components/PageLayout';
 import { Profile } from './pages/Profile';
@@ -12,6 +13,9 @@ import MenuPrincipal from './componentes/MenuPricipal';
 import Articulos from './componentes/Articulos/ListaArticulos';
 import CrearArticulo from './componentes/Articulos/CrearArticulo';
 import EditarArticulo from './componentes/Articulos/EditarArticulo';
+import Header from './components/Header/Header';
+import { FacturaHome } from './componentes/Facturas/FacturaHome';
+import FacturaDetail from './componentes/Facturas/FacturaDetail';
 
 const ProtectedRoute = ({ children }) => {
     const { instance } = useMsal();
@@ -22,6 +26,7 @@ const ProtectedRoute = ({ children }) => {
 
 const Pages = () => {
     return (
+        <AnimatePresence mode='wait'>
 <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/profile" element={
@@ -49,7 +54,20 @@ const Pages = () => {
                     <EditarArticulo />
                 </ProtectedRoute>
             } />
+
+            <Route path="/Facturas" element={
+                            <ProtectedRoute>
+                                <FacturaHome />
+                            </ProtectedRoute>
+            } />
+
+            <Route path="/Facturas/:idFactura" element={
+                    <ProtectedRoute>
+                        <FacturaDetail />
+                    </ProtectedRoute>
+            } />
         </Routes>
+        </AnimatePresence>
     );
 };
 
