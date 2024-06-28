@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import styled from 'styled-components';
 
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 
 import MainContainer from '../../layout/MainContainer';
 import InvoiceStatusBadge from './InvoiceStatusBadge';
@@ -10,7 +10,7 @@ import InvoiceInfo from './InvoiceInfo';
 import InvoiceItemsTableMobile from './InvoiceItemsTableMobile';
 import InvoiceItemsTable from './InvoiceItemsTable';
 import Button from './Button';
-//import DeleteInvoiceModal from './DeleteInvoiceModal';
+import DeleteInvoiceModal from './DeleteInvoiceModal';
 
 import { formatDate } from '../../utils/utils';
 import useWindowSize from '../../hooks/useWindowSize';
@@ -164,6 +164,8 @@ const FacturaDetail = () =>{
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
 
+    let navigate = useNavigate();
+
     const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
 
     async function fetchFactura() {
@@ -191,6 +193,9 @@ const FacturaDetail = () =>{
         fetchFactura();
     }, []); 
 
+    const irEditar = (idFactura) =>{
+        navigate(`/Facturas/Edit/${idFactura}`)
+    }
     
     if (isLoading) {
         return <div>Cargando...</div>;
@@ -216,7 +221,7 @@ const FacturaDetail = () =>{
                             variant="secondary"
                             aria-label="Edit Invoice"
                             mode = "edit"
-                            //onClick={() => dispatch({ type: EDIT_INVOICE, payload: invoice.id })}
+                            onClick={() => irEditar(factura.id)}
                             >
                             Edit
                             </Button>
@@ -270,13 +275,13 @@ const FacturaDetail = () =>{
                     </DetailsCard>
                     </>
                 )}
-                {/* {factura && (
+                {factura && (
                     <DeleteInvoiceModal
                     id={factura.id}
                     isOpen={isDeleteModalOpen}
                     closeModal={() => setIsDeleteModalOpen(false)}
                     />
-                )} */}
+                )}
             </MainContainer>
     )
 

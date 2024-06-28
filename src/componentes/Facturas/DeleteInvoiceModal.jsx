@@ -5,7 +5,7 @@ import { Dialog } from '@headlessui/react';
 
 import Button from './Button';
 
-const Overlay = styled(Dialog.Overlay)`
+const Overlay = styled.div`
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.49);
@@ -19,7 +19,7 @@ const ModalContainer = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: yellow;
+  background-color: #FFFFFF;
   border-radius: 0.5rem;
   padding: 2rem;
   z-index: 7002;
@@ -28,13 +28,13 @@ const ModalContainer = styled.div`
 const ModalHeading = styled(Dialog.Title)`
   font-size: 1.25rem;
   font-weight: 700;
-  color: black;
+  color: #0C0E16;
   margin-bottom: 0.75rem;
 `;
 
 const ModalMessage = styled(Dialog.Description)`
   font-size: 0.75rem;
-  color: red;
+  color: #888EB0;
   letter-spacing: -0.23px;
   margin-bottom: 1.5rem;
   line-height: 1.8;
@@ -60,13 +60,13 @@ function DeleteInvoiceModal({ id, isOpen, closeModal }) {
       <ModalContainer>
         <ModalHeading>Confirm Deletion</ModalHeading>
         <ModalMessage>
-          Are you sure you want to delete invoice #{id}? This action cannot be undone.
+         ¿Estas seguro que quieres eliminar la factura #{id}? Esta acción no se puede deshacer.
         </ModalMessage>
         <ButtonContainer>
           <Button variant="secondary" onClick={closeModal}>
             Cancel
           </Button>
-          <Button variant="warning" onClick={deleteInvoice}>
+          <Button mode={"delete"} variant="warning" onClick={deleteInvoice}>
             Delete
           </Button>
         </ButtonContainer>
