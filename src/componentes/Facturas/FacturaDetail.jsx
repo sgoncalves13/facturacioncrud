@@ -37,6 +37,7 @@ const FacturaDetail = () =>{
         fetchFactura();
     }, []); 
 
+    
     if (isLoading) {
         return <div>Cargando...</div>;
     }
