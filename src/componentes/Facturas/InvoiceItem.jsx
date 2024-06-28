@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-//import InvoiceStatusBadge from './InvoiceStatusBadge';
+import InvoiceStatusBadge from './InvoiceStatusBadge';
 
 import deviceSize from '../../styles/breakpoints';
 import { formatDate, formatPrice } from '../../utils/utils';
@@ -107,7 +107,7 @@ function InvoiceItem({ idFactura, Usuario, precioTotal, fechaIns, status}) {
       <DueDate>{formattedDueDate}</DueDate>
       <ClientName>{Usuario}</ClientName>
       <Amount>{formattedTotal}</Amount>
-      {/*<InvoiceStatusBadge status={status} />*/}
+      <InvoiceStatusBadge status={status.toString()} />
       <ArrowIcon>
         <IconArrowRight />
       </ArrowIcon>
