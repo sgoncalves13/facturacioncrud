@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import React from "react";
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import InvoiceItem from "./InvoiceItem";
@@ -32,38 +31,7 @@ const invoiceListItemVariants = {
     }
   };
 
-export const ListadoFacturas= () =>{
-
-    const [facturas, setFacturas] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [hasError, setHasError] = useState(false);
-
-    const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
-
-    async function fetchFacturas() {
-        try {
-            const response = await fetch("https://localhost:7207/GetAllCabecera", {
-                headers: {
-                    'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
-                }
-            });
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const jsonData = await response.json();
-            setFacturas(jsonData);
-            console.log(jsonData)
-        } catch (error) {
-            console.error('Error fetching invoices:', error);
-            setHasError(true);
-        } finally {
-            setIsLoading(false);
-        }
-    }
-
-    useEffect(() => {
-        fetchFacturas();
-    }, []); 
+export const ListadoFacturas= ({facturas, isLoading, hasError}) =>{
 
     if (isLoading) {
         return <div>Cargando...</div>;

@@ -4,6 +4,8 @@ import styled, { keyframes } from 'styled-components';
 import deviceSize from '../../styles/breakpoints';
 import { ListadoFacturas } from "./ListadoFacturas";
 
+import React, { useEffect, useState } from "react";
+
 const HomeHeader = styled.div`
   display: flex;
   align-items: center;
@@ -119,6 +121,37 @@ const CreateFacturaButton = styled.button`
 
 export const FacturaHome = () => {
 
+  const [facturas, setFacturas] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [hasError, setHasError] = useState(false);
+
+    const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
+
+    async function fetchFacturas() {
+        try {
+            const response = await fetch("https://localhost:7207/GetAllCabecera", {
+                headers: {
+                    'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const jsonData = await response.json();
+            setFacturas(jsonData);
+            console.log(jsonData)
+        } catch (error) {
+            console.error('Error fetching invoices:', error);
+            setHasError(true);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        fetchFacturas();
+    }, []); 
+
     return (
             <div>
                 <Header/>
@@ -126,12 +159,12 @@ export const FacturaHome = () => {
                 <HomeHeader>
                     <div>
                     <Heading>Facturas</Heading>
-                    <p>Conteo Facturas: </p>
+                    <p>Conteo Facturas: {String(facturas.length)}</p>
                     </div>
                     <CreateFacturaButton>Crear factura</CreateFacturaButton>
                 </HomeHeader>
                     <div>
-                    <ListadoFacturas/>
+                    <ListadoFacturas facturas={facturas} isLoading={isLoading} hasError={hasError}/>
                     </div>
                 </MainContainer>
             </div>
