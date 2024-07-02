@@ -20,7 +20,7 @@ const Legend = styled.legend`
   margin-bottom: 1.5rem;
   font-family: Spartan, sans-serif;
   font-weight: 700;
-  color: ${({ theme }) => theme.form.legend.color};
+  color: red;
   letter-spacing: -0.25px;
 `;
 
@@ -71,7 +71,7 @@ const FormBottom = styled.div`
   }
 `;
 
-function InvoiceForm({ initialValues, validationSchema, onSubmit, saveInvoice, discard }) {
+function InvoiceForm({ initialValues, validationSchema, onSubmit, saveInvoice, discard, renglones }) {
   return (
     <Formik
       initialValues={initialValues}
@@ -209,7 +209,7 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, saveInvoice, d
                 />
               </div>
             </InvoiceDatesGrid>
-            <InvoiceItemsList />
+            <InvoiceItemsList renglones={renglones}/>
             {values.status === '' && (
               <FormBottom>
                 <Button

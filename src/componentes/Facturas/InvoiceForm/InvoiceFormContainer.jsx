@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 import { nanoid } from 'nanoid';
-
+import { useParams, useNavigate } from 'react-router-dom';
 import InvoiceForm from './InvoiceForm';
 
 
@@ -77,21 +77,9 @@ const validationSchema = Yup.object({
     )
 });
 
-function FormContainer() {
-  const [invoice, setInvoice] = useState(null);
+function FormContainer({factura}) {
 
 
-  useEffect(() => {
-    if (isEditingInvoice) {
-      let [data] = invoices.filter((item) => item.id === editInvoiceID);
-      data = {
-        ...data,
-        createdAt: convertStringToDate(data.createdAt),
-        paymentDue: convertStringToDate(data.paymentDue)
-      };
-      setInvoice(data);
-    }
-  }, [isEditingInvoice, editInvoiceID]);
 
   const calcTotal = (items) => {
     if (items.length === 1) {
@@ -153,18 +141,16 @@ function FormContainer() {
 
   return (
     <>
-      {invoice && (
-        <FormHeading>
-          Edit <span>{invoice.id}</span>
-        </FormHeading>
-      )}
-      {!invoice && <FormHeading>New Invoice</FormHeading>}
+      <FormHeading>
+        Edit <span>{factura.id}</span>
+      </FormHeading>
       <InvoiceForm
         validationSchema={validationSchema}
-        initialValues={invoice || initialValues}
+        initialValues={factura || initialValues}
         discard={discard}
         saveInvoice={saveInvoice}
         onSubmit={onSubmit}
+        renglones={factura.reglones}
       />
     </>
   );

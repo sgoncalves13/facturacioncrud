@@ -12,15 +12,15 @@ const DatePickerStyling = createGlobalStyle`
       font-weight:700;
       font-size:0.75rem;
       letter-spacing:-0.25px;
-      color:${({ theme }) => theme.datePicker.color};
+      color:gray;
       border-radius:0.5rem;
       border:none;
-      background-color:${({ theme }) => theme.datePicker.bg};
+      background-color: blue;
   }
   .react-datepicker__header--custom {
       padding:0;
       border:none;
-      background-color:${({ theme }) => theme.datePicker.bg};
+      background-color: blue;
   }
 
   .react-datepicker__header--custom .react-datepicker__day-names {
@@ -35,23 +35,23 @@ const DatePickerStyling = createGlobalStyle`
   .react-datepicker__day {
       &:hover {
           background-color:transparent;
-          color:${({ theme }) => theme.datePicker.selectedBg};
+          color:blue;
       }
   }
 
   .react-datepicker__day--keyboard-selected,
   .react-datepicker__day--selected {
-      background-color:${({ theme }) => theme.datePicker.selectedBg};
+      background-color:blue;
       color:#ffffff;
   }
 
   .react-datepicker__day--disabled {
-      color:${({ theme }) => theme.datePicker.color};
+      color:blue;
       opacity:0.3;
   }
 
   .react-datepicker__day--outside-month {
-      color:${({ theme }) => theme.datePicker.color};
+      color:gray;
       opacity:0.08;
   }
 `;
@@ -61,36 +61,36 @@ const InputLabel = styled.label`
   font-family: Spartan, sans-serif;
   font-size: 0.75rem;
   font-weight: 500;
-  color: ${({ theme }) => theme.datePicker.label.color};
+  color: black;
   line-height: 1;
   margin-bottom: 0.625rem;
   & + span {
     display: block;
     font-size: 0.625rem;
-    color: ${({ theme }) => theme.datePicker.label.error.color};
+    color: black;
   }
 `;
 
 const DatePickerInput = styled(DatePicker)`
   width: 100%;
   height: 3rem;
-  background: ${({ theme }) => theme.datePicker.bg} url(${IconCalendar}) no-repeat calc(100% - 16px)
+  background: blue url(${IconCalendar}) no-repeat calc(100% - 16px)
     center;
   border-width: 1px;
   border-style: solid;
-  border-color: ${({ theme, error }) =>
-    error ? theme.datePicker.error.borderColor : theme.datePicker.borderColor};
+  color: ${({ error }) =>
+    error ? "gray" : "red"};
   border-radius: 0.25rem;
   padding: 0.9375rem 2.625rem 0.9375rem 1.25rem;
   font-family: Spartan, sans-serif;
   font-size: 0.75rem;
   font-weight: 700;
-  color: ${({ theme }) => theme.text.h1};
+  color: black;
   letter-spacing: -0.25px;
   cursor: pointer;
   &:focus {
     outline: none;
-    border-color: ${({ theme }) => theme.datePicker.focus.borderColor};
+    border-color: blue;
   }
   &:disabled {
     opacity: 0.6;

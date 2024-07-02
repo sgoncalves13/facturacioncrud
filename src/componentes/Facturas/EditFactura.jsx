@@ -54,8 +54,7 @@ const EditFactura = () =>{
 
     return(
         <div>
-            {factura.id}
-            {/* <InvoiceFormContainer/> */}
+            <InvoiceFormContainer factura={factura}/>
         </div>
     )
 }

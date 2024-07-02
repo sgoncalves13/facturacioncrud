@@ -8,8 +8,8 @@ const InputLabel = styled.label`
   font-family: Spartan, sans-serif;
   font-size: 0.75rem;
   font-weight: 500;
-  color: ${({ theme, error }) =>
-    error ? theme.textField.label.error.color : theme.textField.label.color};
+  color: ${({ error }) =>
+    error ? "gray" : "red"};
   line-height: 1;
   margin-bottom: 0.625rem;
   span {
@@ -23,20 +23,20 @@ const TextInput = styled.input`
   height: 3rem;
   border-width: 1px;
   border-style: solid;
-  background-color: ${({ theme }) => theme.textField.bg};
-  border-color: ${({ theme, error }) =>
-    error ? theme.textField.error.borderColor : theme.textField.borderColor};
+  background-color: blue;
+  border-color: ${({ error }) =>
+    error ? "gray" : "red"};
   border-radius: 0.25rem;
   padding: 0.9375rem 1.25rem;
   font-family: Spartan, sans-serif;
   font-size: 0.75rem;
   font-weight: 700;
-  color: ${({ theme }) => theme.text.h1};
+  color: black;
   letter-spacing: -0.25px;
   &:focus {
     outline: none;
-    border-color: ${({ theme, error }) =>
-      error ? theme.textField.error.borderColor : theme.textField.focus.borderColor};
+    border-color: ${({ error }) =>
+    error ? "gray" : "red"};
   }
   &:placeholder {
     color: rgba(12, 14, 22, 0.4);
