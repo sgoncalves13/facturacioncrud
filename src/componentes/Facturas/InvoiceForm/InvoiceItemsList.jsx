@@ -29,7 +29,7 @@ margin-top: 0.5rem;
 }
 .item-grid {
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 20px;
+  grid-template-columns: 1fr 1fr 1fr 20px;
   gap: 24px 16px;
   align-items: center;
   margin-bottom: 3rem;
@@ -48,7 +48,7 @@ margin-top: 0.5rem;
     margin-bottom: 0;
   }
   @media screen and (min-width: ${deviceSize.md}) {
-    grid-template-columns: 1fr 50px 100px 70px 20px;
+    grid-template-columns: 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr 0.2fr;
     margin-bottom: 1.125rem;
     div:first-child {
       grid-column: auto;
@@ -97,6 +97,14 @@ function InvoiceItemsList({renglones}) {
             {values.reglones.map((item, index) => {
               return (
                 <div key={index} className="item-grid">
+                  <div className="item-secuencia">
+                    <TextField
+                      label="Secuencia"
+                      id={`item-name-${index}`}
+                      name={`reglones[${index}].secuencia`}
+                      type="text"
+                    />
+                  </div>
                   <div className="item-name">
                     <TextField
                       label="Id Articulo"
@@ -107,17 +115,49 @@ function InvoiceItemsList({renglones}) {
                   </div>
                   <div className="quantity">
                     <TextField
-                      label="Qty"
+                      label="Cantidad"
                       id={`qty-${index}`}
                       name={`reglones[${index}].cantidad`}
                       type="text"
                     />
                   </div>
+                  <div className="quantity">
+                    <TextField
+                      label="Unidad Medida Id"
+                      id={`qty-${index}`}
+                      name={`reglones[${index}].unidadmedida_id`}
+                      type="text"
+                    />
+                  </div>
                   <div className="price">
                     <TextField
-                      label="Price"
+                      label="Precio Unidad"
                       id={`price-${index}`}
                       name={`reglones[${index}].precio_unitario`}
+                      type="text"
+                    />
+                  </div>
+                  <div className="descuento">
+                    <TextField
+                      label="Descuento"
+                      id={`descuento-${index}`}
+                      name={`reglones[${index}].descuento`}
+                      type="text"
+                    />
+                    </div>
+                  <div className="recargo">
+                    <TextField
+                      label="Recargo"
+                      id={`recargo-${index}`}
+                      name={`reglones[${index}].recargo`}
+                      type="text"
+                    />
+                  </div>
+                  <div className="impuesto">
+                    <TextField
+                      label="Impuesto"
+                      id={`impuesto-${index}`}
+                      name={`reglones[${index}].impuesto`}
                       type="text"
                     />
                   </div>
@@ -138,10 +178,16 @@ function InvoiceItemsList({renglones}) {
               variant="secondary"
               onClick={() =>
                 arrayHelpers.push({
-                  art_id: 'Id del artículo',
+                  factura_id: 9,
+                  secuencia: 0,
+                  art_id: 0,
                   cantidad: 0,
+                  unidadmedida_id: 0,
                   precio_unitario: 0,
-                  total: 0
+                  descuento: 0,
+                  recargo: 0,
+                  impuesto: 0,
+                  precio_total: 0,
                 })
               }>
               + Add New Item
