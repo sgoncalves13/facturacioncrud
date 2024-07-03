@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import IconPlus from '../../assets/icon-plus.svg';
 
 const colorButton = (mode) =>{
-  console.log(mode)
   if (mode == "delete"){
     return "#F24337"
   }
@@ -14,7 +13,6 @@ const colorButton = (mode) =>{
 }
 
 const HovercolorButton = (mode) =>{
-  console.log(mode)
   if (mode == "delete"){
     return "rgba(242, 67, 55, 0.69)"
   }

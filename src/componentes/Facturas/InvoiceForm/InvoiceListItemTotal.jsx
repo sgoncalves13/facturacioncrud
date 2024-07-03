@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     font-size: 0.75rem;
     font-weight: 500;
     line-height: 1;
-    color: ${({ theme }) => theme.invoiceItemsList.label.color};
+    color: #7E88C3;
     margin-bottom: 0.625rem;
   }
   .amount {
@@ -19,7 +19,7 @@ const Wrapper = styled.div`
     height: 3rem;
     font-size: 0.75rem;
     font-weight: 700;
-    color: ${({ theme }) => theme.invoiceItemsList.total};
+    color: #0C0E16;
     letter-spacing: -0.25px;
     line-height: 48px;
   }
@@ -27,22 +27,22 @@ const Wrapper = styled.div`
 
 function InvoiceListItemTotal({ index }) {
   const {
-    values: { items },
+    values: { reglones },
     setFieldValue
   } = useFormikContext();
 
   useEffect(() => {
-    const quantity = items[index].quantity;
-    const price = items[index].price;
+    const quantity = reglones[index].cantidad;
+    const price = reglones[index].precio_unitario;
     if (!isNaN(quantity) && !isNaN(price)) {
-      setFieldValue(`items[${index}].total`, quantity * price);
+      setFieldValue(`reglones[${index}].precio_total`, quantity * price);
     }
-  }, [items]);
+  }, [reglones]);
 
   return (
     <Wrapper className="total">
       <span className="total-label">Total</span>
-      <span className="amount">{items[index].total}</span>
+      <span className="amount">{reglones[index].precio_total}</span>
     </Wrapper>
   );
 }

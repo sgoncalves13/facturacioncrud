@@ -12,15 +12,15 @@ const DatePickerStyling = createGlobalStyle`
       font-weight:700;
       font-size:0.75rem;
       letter-spacing:-0.25px;
-      color:gray;
+      color: #0C0E16;
       border-radius:0.5rem;
       border:none;
-      background-color: blue;
+      background-color: #FFF;
   }
   .react-datepicker__header--custom {
       padding:0;
       border:none;
-      background-color: blue;
+      background-color: #FFF;
   }
 
   .react-datepicker__header--custom .react-datepicker__day-names {
@@ -35,23 +35,23 @@ const DatePickerStyling = createGlobalStyle`
   .react-datepicker__day {
       &:hover {
           background-color:transparent;
-          color:blue;
+          color:#7C5DFA;
       }
   }
 
   .react-datepicker__day--keyboard-selected,
   .react-datepicker__day--selected {
-      background-color:blue;
+      background-color: #7C5DFA;
       color:#ffffff;
   }
 
   .react-datepicker__day--disabled {
-      color:blue;
+      color: #0C0E16;
       opacity:0.3;
   }
 
   .react-datepicker__day--outside-month {
-      color:gray;
+      color: #0C0E16;
       opacity:0.08;
   }
 `;
@@ -61,36 +61,36 @@ const InputLabel = styled.label`
   font-family: Spartan, sans-serif;
   font-size: 0.75rem;
   font-weight: 500;
-  color: black;
+  color: #7e88c3;
   line-height: 1;
   margin-bottom: 0.625rem;
   & + span {
     display: block;
     font-size: 0.625rem;
-    color: black;
+    color: #EC5757;
   }
 `;
 
 const DatePickerInput = styled(DatePicker)`
   width: 100%;
   height: 3rem;
-  background: blue url(${IconCalendar}) no-repeat calc(100% - 16px)
+  background: #FFF url(${IconCalendar}) no-repeat calc(100% - 16px)
     center;
   border-width: 1px;
   border-style: solid;
-  color: ${({ error }) =>
-    error ? "gray" : "red"};
+  border-color: ${({ error }) =>
+    error ? "#EC5757" : "#DFE3FA"};
   border-radius: 0.25rem;
   padding: 0.9375rem 2.625rem 0.9375rem 1.25rem;
   font-family: Spartan, sans-serif;
   font-size: 0.75rem;
   font-weight: 700;
-  color: black;
+  color: #0C0E16;
   letter-spacing: -0.25px;
   cursor: pointer;
   &:focus {
     outline: none;
-    border-color: blue;
+    border-color: #9277ff;
   }
   &:disabled {
     opacity: 0.6;

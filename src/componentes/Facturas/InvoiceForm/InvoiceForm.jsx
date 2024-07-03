@@ -1,4 +1,4 @@
-import { Formik, Form } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { nanoid } from 'nanoid';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
@@ -20,11 +20,15 @@ const Legend = styled.legend`
   margin-bottom: 1.5rem;
   font-family: Spartan, sans-serif;
   font-weight: 700;
-  color: red;
+  color: #7C5DFA;
   letter-spacing: -0.25px;
 `;
 
 const FormTextField = styled(TextField)`
+  margin-bottom: 1.5rem;
+`;
+
+const FormCheckbox = styled.input`
   margin-bottom: 1.5rem;
 `;
 
@@ -71,6 +75,32 @@ const FormBottom = styled.div`
   }
 `;
 
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  margin-top:30px;
+  margin-bottom: 30px;
+`;
+
+const CustomCheckbox = styled(Field)`
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-right: 10px;
+  cursor: pointer;
+  outline: none;
+
+  &:checked {
+    background-color: salmon;
+    border-color: salmon;
+  }
+`;
+
 function InvoiceForm({ initialValues, validationSchema, onSubmit, saveInvoice, discard, renglones }) {
   return (
     <Formik
@@ -82,183 +112,84 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, saveInvoice, d
         return (
           <Form>
             <FieldSet>
-              <Legend>Bill From</Legend>
-              <FormTextField
-                label="Street Address"
-                id="sender-street-address"
-                name="senderAddress.street"
-                type="text"
-                aria-required="true"
-              />
-              <AddressFieldsGrid>
-                <div>
-                  <FormTextField
-                    label="City"
-                    id="sender-city"
-                    name="senderAddress.city"
-                    type="text"
-                    aria-required="true"
-                  />
-                </div>
-                <div>
-                  <FormTextField
-                    label="Postal Code"
-                    id="sender-postal-code"
-                    name="senderAddress.postCode"
-                    type="text"
-                    aria-required="true"
-                  />
-                </div>
-                <div>
-                  <FormTextField
-                    label="Country"
-                    id="sender-country"
-                    name="senderAddress.country"
-                    type="text"
-                    aria-required="true"
-                  />
-                </div>
-              </AddressFieldsGrid>
-            </FieldSet>
-            <FieldSet>
-              <Legend>Bill To</Legend>
-              <FormTextField
-                label="Client's Name"
-                id="sender-client-name"
-                name="clientName"
-                type="text"
-                aria-required="true"
-              />
-              <FormTextField
-                label="Client’s Email"
-                id="client-email"
-                name="clientEmail"
-                type="email"
-                placeholder="e.g. email@example.com"
-                aria-required="true"
-              />
-              <FormTextField
-                label="Street Address"
-                id="client-street-address"
-                name="clientAddress.street"
-                type="text"
-                aria-required="true"
-              />
-              <AddressFieldsGrid>
-                <div>
-                  <FormTextField
-                    label="City"
-                    id="client-city"
-                    name="clientAddress.city"
-                    type="text"
-                    aria-required="true"
-                  />
-                </div>
-                <div>
-                  <FormTextField
-                    label="Postal Code"
-                    id="client-postal-code"
-                    name="clientAddress.postCode"
-                    type="text"
-                    aria-required="true"
-                  />
-                </div>
-                <div>
-                  <FormTextField
-                    label="Country"
-                    id="client-country"
-                    name="clientAddress.country"
-                    type="text"
-                    aria-required="true"
-                  />
-                </div>
-              </AddressFieldsGrid>
-            </FieldSet>
-            <InvoiceDatesGrid>
+              <Legend>Factura</Legend>
+              <div>
+                <FormTextField
+                  label="ID Cliente"
+                  id="cliente_id"
+                  name="cliente_id"
+                  type="number"
+                  aria-required="true"
+                />
+              </div>
+              <InvoiceDatesGrid>
               <div>
                 <DatePickerField
-                  label="Invoice Date"
+                  label="Fecha Registro"
                   name="createdAt"
                   id="createdAt"
-                  value={values.createdAt}
-                  selected={values.createdAt}
+                  value={values.fecha_registro}
+                  selected={values.fecha_registro}
                   onChange={setFieldValue}
-                  error={errors.createdAt}
+                  error={errors.fecha_registro}
                   disabled={values.status === 'pending'}
                 />
               </div>
               <div>
                 <DatePickerField
-                  label="Payment Terms"
+                  label="Fecha Emision"
                   name="paymentDue"
                   id="paymentDue"
-                  selected={values.paymentDue}
-                  value={values.paymentDue}
+                  selected={values.fecha_emision}
+                  value={values.fecha_emision}
                   onChange={setFieldValue}
-                  error={errors.paymentDue}
+                  error={errors.fecha_emision}
                 />
               </div>
               <div>
                 <FormTextField
-                  label="Project Description"
-                  id="description"
-                  name="description"
+                  label="Observación"
+                  id="observacion"
+                  name="observacion"
                   type="text"
                   placeholder="e.g. Graphic Design Service"
                   aria-required="true"
                 />
               </div>
             </InvoiceDatesGrid>
+              <FormTextField
+                label="Código"
+                id="codigo"
+                name="codigo"
+                type="text"
+                aria-required="true"
+              />
+              <AddressFieldsGrid>
+              <CheckboxContainer>
+                  <CustomCheckbox type="checkbox" name="anulado" />
+                  <label>Anulado</label>
+              </CheckboxContainer>
+                <div>
+                  <FormTextField
+                    label="Monto Impuesto"
+                    id="monto_impuesto"
+                    name="monto_impuesto"
+                    type="number"
+                    aria-required="true"
+                  />
+                </div>
+                <div>
+                  <FormTextField
+                    label="Monto Precio Total"
+                    id="monto_precio_total"
+                    name="monto_precio_total"
+                    type="number"
+                    aria-required="true"
+                  />
+                </div>
+              </AddressFieldsGrid>
+            </FieldSet>
             <InvoiceItemsList renglones={renglones}/>
-            {values.status === '' && (
-              <FormBottom>
-                <Button
-                  type="button"
-                  variant="secondary"
-                  className="discard"
-                  onClick={() => {
-                    resetForm();
-                    discard();
-                  }}>
-                  Discard
-                </Button>
-                <Button
-                  type="button"
-                  variant="tertiary"
-                  className="draft"
-                  onClick={() => saveInvoice(values)}>
-                  Save as Draft
-                </Button>
-                <Button type="submit" className="save-send">
-                  Save & Send
-                </Button>
-              </FormBottom>
-            )}
-            {values.status === 'draft' && (
-              <FormBottom>
-                <Button
-                  type="button"
-                  variant="secondary"
-                  className="discard"
-                  onClick={() => {
-                    resetForm();
-                    discard();
-                  }}>
-                  Cancel
-                </Button>
-                <Button
-                  type="button"
-                  variant="tertiary"
-                  className="draft"
-                  onClick={() => saveInvoice(values)}>
-                  Save as Draft
-                </Button>
-                <Button type="submit" className="save-send">
-                  Save & Send
-                </Button>
-              </FormBottom>
-            )}
-            {values.status === 'pending' && (
               <FormBottom>
                 <Button
                   type="button"
@@ -274,7 +205,6 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, saveInvoice, d
                   Save Changes
                 </Button>
               </FormBottom>
-            )}
           </Form>
         );
       }}

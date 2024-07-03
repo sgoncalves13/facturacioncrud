@@ -8,6 +8,8 @@ import useWindowSize from '../../hooks/useWindowSize';
 
 import InvoiceFormContainer from './InvoiceForm/InvoiceFormContainer'
 
+import { motion } from 'framer-motion';
+
 const EditFactura = () =>{
     const { idFactura } = useParams();
 
@@ -18,6 +20,19 @@ const EditFactura = () =>{
     const [hasError, setHasError] = useState(false);
 
     const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
+
+    const wrapperVariants = {
+        hidden: { opacity: 0, x: -100 },
+        visible: {
+          opacity: 1,
+          x: 0,
+          transition: {
+            type: 'tween',
+            duration: 0.5,
+          },
+        },
+        exit: { opacity: 0, x: -100 },
+      };
 
     async function fetchFactura() {
         try {
@@ -53,9 +68,14 @@ const EditFactura = () =>{
     }
 
     return(
-        <div>
+        <motion.div 
+        as={motion.div}
+        variants={wrapperVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit">
             <InvoiceFormContainer factura={factura}/>
-        </div>
+        </motion.div>
     )
 }
 

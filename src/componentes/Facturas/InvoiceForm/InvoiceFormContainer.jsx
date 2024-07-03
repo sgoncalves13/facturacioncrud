@@ -10,6 +10,20 @@ import InvoiceForm from './InvoiceForm';
 
 import { convertDateToString, convertStringToDate } from '../../../utils/utils';
 
+const DivExterno = styled.div`
+    margin-right:15%;
+    margin-left:15%;
+    margin-top: 5%;
+    margin-bottom:5%;
+    padding: 5%;
+    background-color: white;
+    border-radius:30px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4), 
+                0 12px 30px rgba(0, 0, 0, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.1);
+    background: linear-gradient(145deg, white, #F0F0F0);
+`
+
 const FormHeading = styled.span`
   display: block;
   font-size: 1.5rem;
@@ -48,31 +62,53 @@ const initialValues = {
   total: 0
 };
 
+const initialValues2 = {
+  cliente_id: 0,
+  fecha_registro: new Date(),
+  fecha_emision: new Date(),
+  observacion: '',
+  codigo: '',
+  anulado: false,
+  monto_impuesto: 0,
+  id: 0,
+  usu_ins_id: '',
+  fecha_ins: new Date(),
+  usu_mod_id: null,
+  fecha_mod: null,
+  row_version: null,
+  reglones: [],
+  monto_precio_total: 0
+};
+
+
 const validationSchema = Yup.object({
-  clientName: Yup.string().required('required'),
-  clientEmail: Yup.string().email('invalid email').required('required'),
-  createdAt: Yup.date(),
-  paymentDue: Yup.date().min(Yup.ref('createdAt'), "can't be before invoice date"),
-  description: Yup.string().required('required'),
-  senderAddress: Yup.object().shape({
-    street: Yup.string().required('required'),
-    city: Yup.string().required('required'),
-    postCode: Yup.string().required('required'),
-    country: Yup.string().required('required')
-  }),
-  clientAddress: Yup.object().shape({
-    street: Yup.string().required('required'),
-    city: Yup.string().required('required'),
-    postCode: Yup.string().required('required'),
-    country: Yup.string().required('required')
-  }),
-  items: Yup.array()
-    .min(1, 'An item must be added')
+  cliente_id: Yup.number().required('require'),
+  fecha_registro: Yup.date().required('required'),
+  fecha_emision: Yup.date().required('required'),
+  observacion: Yup.string().required('required'),
+  codigo: Yup.string().required('required'),
+  anulado: Yup.boolean().required('required'),
+  monto_impuesto:Yup.number().required('required'),
+  monto_precio_total:Yup.number().required('required'),
+  reglones: Yup.array()
     .of(
       Yup.object().shape({
-        name: Yup.string().required(),
-        quantity: Yup.number().required(),
-        price: Yup.number().required()
+        factura_id: Yup.number().required(),
+        secuencia: Yup.number().required(),
+        art_id: Yup.number().required(),
+        cantidad: Yup.number().required(),
+        unidadmedida_id: Yup.number().required(),
+        precio_unitario: Yup.number().required(),
+        descuento: Yup.number().required(),
+        recargo: Yup.number().required(),
+        impuesto: Yup.number().required(),
+        precio_total: Yup.number().required(),
+        id: Yup.number().required(),
+        usu_ins_id: Yup.string().required(),
+        fecha_ins: Yup.date().required(),
+        usu_mod_id: Yup.string().nullable(),
+        fecha_mod: Yup.date().nullable(),
+        row_version: Yup.string().required()
       })
     )
 });
@@ -90,27 +126,29 @@ function FormContainer({factura}) {
   };
 
   const onSubmit = (values) => {
-    const total = calcTotal(values.items);
-    const createdAt = convertDateToString(values.createdAt);
-    const paymentDue = convertDateToString(values.paymentDue);
-    if (!values.status) {
-      const id = nanoid(6);
-      dispatch({
-        type: ADD_INVOICE,
-        payload: { ...values, status: 'pending', id, total, createdAt, paymentDue }
-      });
-    } else if (values.status === 'draft') {
-      dispatch({
-        type: UPDATE_INVOICE,
-        payload: { ...values, status: 'pending', total, createdAt, paymentDue }
-      });
-    } else if (values.status === 'pending') {
-      dispatch({
-        type: UPDATE_INVOICE,
-        payload: { ...values, total, createdAt, paymentDue }
-      });
-    }
-    dispatch({ type: CLOSE_DRAWER });
+
+    console.log(values)
+    // const total = calcTotal(values.items);
+    // const createdAt = convertDateToString(values.createdAt);
+    // const paymentDue = convertDateToString(values.paymentDue);
+    // if (!values.status) {
+    //   const id = nanoid(6);
+    //   dispatch({
+    //     type: ADD_INVOICE,
+    //     payload: { ...values, status: 'pending', id, total, createdAt, paymentDue }
+    //   });
+    // } else if (values.status === 'draft') {
+    //   dispatch({
+    //     type: UPDATE_INVOICE,
+    //     payload: { ...values, status: 'pending', total, createdAt, paymentDue }
+    //   });
+    // } else if (values.status === 'pending') {
+    //   dispatch({
+    //     type: UPDATE_INVOICE,
+    //     payload: { ...values, total, createdAt, paymentDue }
+    //   });
+    // }
+    // dispatch({ type: CLOSE_DRAWER });
   };
 
   const saveInvoice = (values) => {
@@ -140,7 +178,7 @@ function FormContainer({factura}) {
   };
 
   return (
-    <>
+    <DivExterno>
       <FormHeading>
         Edit <span>{factura.id}</span>
       </FormHeading>
@@ -152,7 +190,7 @@ function FormContainer({factura}) {
         onSubmit={onSubmit}
         renglones={factura.reglones}
       />
-    </>
+    </DivExterno>
   );
 }
 

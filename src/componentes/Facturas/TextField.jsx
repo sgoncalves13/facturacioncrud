@@ -9,7 +9,7 @@ const InputLabel = styled.label`
   font-size: 0.75rem;
   font-weight: 500;
   color: ${({ error }) =>
-    error ? "gray" : "red"};
+    error ? "#EC5757" : "#7e88c3"};
   line-height: 1;
   margin-bottom: 0.625rem;
   span {
@@ -23,20 +23,20 @@ const TextInput = styled.input`
   height: 3rem;
   border-width: 1px;
   border-style: solid;
-  background-color: blue;
+  background-color: #FFFFFF;
   border-color: ${({ error }) =>
-    error ? "gray" : "red"};
+    error ? "#EC5757" : "#DFE3FA"};
   border-radius: 0.25rem;
   padding: 0.9375rem 1.25rem;
   font-family: Spartan, sans-serif;
   font-size: 0.75rem;
   font-weight: 700;
-  color: black;
+  color: #0C0E16;
   letter-spacing: -0.25px;
   &:focus {
     outline: none;
     border-color: ${({ error }) =>
-    error ? "gray" : "red"};
+    error ? "#EC5757" : "#9277ff"};
   }
   &:placeholder {
     color: rgba(12, 14, 22, 0.4);
