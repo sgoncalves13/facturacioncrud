@@ -1,10 +1,10 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 import { nanoid } from 'nanoid';
-import { useParams, useNavigate } from 'react-router-dom';
 import InvoiceForm from './InvoiceForm';
-
+import environment from '../../../environment.json'
 
 // import { CLOSE_DRAWER, ADD_INVOICE, UPDATE_INVOICE, CANCEL_INVOICE_EDIT } from '../../actions';
 
@@ -93,7 +93,9 @@ function FormContainer({factura}) {
 
   const [deletedReglones, setDeletedReglones] = useState([]);
 
+  const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
 
+  let navigate = useNavigate();
 
   const calcTotal = (items) => {
     if (items.length === 1) {
@@ -107,8 +109,8 @@ function FormContainer({factura}) {
     const keys = new Set([...Object.keys(reglon1)]);
 
     for (let key of keys) {
-      // console.log(reglon1[key],reglon2[key])
-      if (reglon1[key] !== reglon2[key]) {
+      //console.log(typeof(reglon1[key]),typeof(reglon2[key]))
+      if (String(reglon1[key]) !== String(reglon2[key])) {
         return true; 
       }
     }
@@ -126,7 +128,7 @@ function FormContainer({factura}) {
     return hm
   }
 
-  const handleSubmit = (deletedReglones) =>(values) => {
+  const handleSubmit = (deletedReglones) => async (values) => {
 
     let ModifiedNewReglones = [] 
 
@@ -150,26 +152,73 @@ function FormContainer({factura}) {
     console.log("REGLONES VALUES:", values.reglones)
     console.log("REGLONES ELIMINADOS:", deletedReglones)
 
-  };
+    const facturaData = {
+      infoFactura: {
+        id: values.id,
+        usu_ins_id: values.usu_ins_id,
+        fecha_ins: values.fecha_ins,
+        usu_mod_id: values.usu_mod_id,
+        fecha_mod: values.fecha_mod,
+        row_version: values.row_version,
+        cliente_id: values.cliente_id,
+        fecha_registro: values.fecha_registro,
+        fecha_emision: values.fecha_emision,
+        observacion: values.observacion,
+        codigo: values.codigo,
+        anulado: values.anulado,
+        monto_impuesto: values.monto_impuesto,
+        monto_precio_total: values.monto_precio_total,
+        reglones: ModifiedNewReglones.map(reglon => ({
+          id: reglon.id,
+          usu_ins_id: reglon.usu_ins_id,
+          fecha_ins: reglon.fecha_ins,
+          usu_mod_id: reglon.usu_mod_id,
+          fecha_mod: reglon.fecha_mod,
+          row_version: reglon.row_version,
+          factura_id: reglon.factura_id,
+          secuencia: reglon.secuencia,
+          art_id: reglon.art_id,
+          cantidad: reglon.cantidad,
+          unidadmedida_id: reglon.unidadmedida_id,
+          precio_unitario: reglon.precio_unitario,
+          descuento: reglon.descuento,
+          recargo: reglon.recargo,
+          impuesto: reglon.impuesto,
+          precio_total: reglon.precio_total
+        }))
+      },
+      listReglonesDelete: deletedReglones.map(reglon => ({
+        id: reglon.id,
+        rowVersion: reglon.row_version
+      }))
+    };
 
-  const saveInvoice = (values) => {
-    const total = calcTotal(values.items);
-    const createdAt = convertStringToDate(values.createdAt);
-    const paymentDue = convertStringToDate(values.paymentDue);
-    if (values.status === 'draft') {
-      dispatch({
-        type: UPDATE_INVOICE,
-        payload: { ...values, total, createdAt, paymentDue }
+    console.log(facturaData)
+  
+    try {
+      const response = await fetch(`${environment.baseUrl}/Factura/UpdateFactura`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
+        },
+        body: JSON.stringify(facturaData),
       });
-    } else {
-      const id = nanoid(6);
-      dispatch({
-        type: ADD_INVOICE,
-        payload: { ...values, status: 'draft', id, total, createdAt, paymentDue }
-      });
+  
+      if (response.ok) {
+        console.log('Factura actualizada');
+        alert('Factura con id: ' + String(values.id) + ' actualizada exitosamente');
+        navigate(`/Facturas/${values.id}`);
+      } else {
+        const errorText = await response.text();
+        console.error('Error:', errorText);
+        alert('Error al actualizar la factura con id: ' + String(values.id) + '. Detalles: ' + errorText);
+      }
+    } catch (error) {
+      console.error('Error al realizar la solicitud:', error);
+      alert('Error al realizar la solicitud. Por favor, intenta de nuevo más tarde.');
     }
-    dispatch({ type: CLOSE_DRAWER });
-  };
+  }
 
   const discard = () => {
     dispatch({ type: CLOSE_DRAWER });
@@ -187,7 +236,6 @@ function FormContainer({factura}) {
         validationSchema={validationSchema}
         initialValues={factura || initialValues}
         discard={discard}
-        saveInvoice={saveInvoice}
         onSubmit={handleSubmit(deletedReglones)}
         deletedReglones={deletedReglones}
         setDeletedReglones={setDeletedReglones}
