@@ -2,6 +2,7 @@ import { Formik, Form, Field } from 'formik';
 import { nanoid } from 'nanoid';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
+import { useNavigate } from 'react-router-dom';
 
 import TextField from '../TextField';
 import Button from '../Button';
@@ -102,6 +103,7 @@ const CustomCheckbox = styled(Field)`
 `;
 
 function InvoiceForm({ initialValues, validationSchema, onSubmit, discard, deletedReglones, setDeletedReglones }) {
+  let navigate = useNavigate()
   return (
     <Formik
       initialValues={initialValues}
@@ -197,9 +199,18 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, discard, delet
                   className="discard"
                   onClick={() => {
                     resetForm();
-                    discard();
+                    navigate(`/Facturas/${values.id}`);
                   }}>
                   Cancel
+                </Button>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="discard"
+                  onClick={() => {
+                    resetForm();
+                  }}>
+                  Descartar todos los cambios
                 </Button>
                 <Button type="submit" className="save-send">
                   Save Changes
