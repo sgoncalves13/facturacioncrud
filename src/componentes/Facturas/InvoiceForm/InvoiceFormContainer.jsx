@@ -39,30 +39,6 @@ const FormHeading = styled.span`
 `;
 
 const initialValues = {
-  id: '',
-  status: '',
-  clientName: '',
-  clientEmail: '',
-  createdAt: new Date(),
-  paymentDue: new Date(),
-  description: '',
-  senderAddress: {
-    street: '',
-    city: '',
-    postCode: '',
-    country: ''
-  },
-  clientAddress: {
-    street: '',
-    city: '',
-    postCode: '',
-    country: ''
-  },
-  items: [],
-  total: 0
-};
-
-const initialValues2 = {
   cliente_id: 0,
   fecha_registro: new Date(),
   fecha_emision: new Date(),
@@ -115,6 +91,8 @@ const validationSchema = Yup.object({
 
 function FormContainer({factura}) {
 
+  const [deletedReglones, setDeletedReglones] = useState([]);
+
 
 
   const calcTotal = (items) => {
@@ -125,30 +103,11 @@ function FormContainer({factura}) {
     return totals.reduce((prev, current) => prev + current);
   };
 
-  const onSubmit = (values) => {
+  const handleSubmit = (deletedReglones) =>(values) => {
 
     console.log(values)
-    // const total = calcTotal(values.items);
-    // const createdAt = convertDateToString(values.createdAt);
-    // const paymentDue = convertDateToString(values.paymentDue);
-    // if (!values.status) {
-    //   const id = nanoid(6);
-    //   dispatch({
-    //     type: ADD_INVOICE,
-    //     payload: { ...values, status: 'pending', id, total, createdAt, paymentDue }
-    //   });
-    // } else if (values.status === 'draft') {
-    //   dispatch({
-    //     type: UPDATE_INVOICE,
-    //     payload: { ...values, status: 'pending', total, createdAt, paymentDue }
-    //   });
-    // } else if (values.status === 'pending') {
-    //   dispatch({
-    //     type: UPDATE_INVOICE,
-    //     payload: { ...values, total, createdAt, paymentDue }
-    //   });
-    // }
-    // dispatch({ type: CLOSE_DRAWER });
+    console.log(deletedReglones)
+
   };
 
   const saveInvoice = (values) => {
@@ -187,8 +146,9 @@ function FormContainer({factura}) {
         initialValues={factura || initialValues}
         discard={discard}
         saveInvoice={saveInvoice}
-        onSubmit={onSubmit}
-        renglones={factura.reglones}
+        onSubmit={handleSubmit(deletedReglones)}
+        deletedReglones={deletedReglones}
+        setDeletedReglones={setDeletedReglones}
       />
     </DivExterno>
   );

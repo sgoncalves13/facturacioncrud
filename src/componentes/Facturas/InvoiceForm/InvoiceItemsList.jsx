@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 import { FieldArray, useFormikContext } from 'formik';
 
+import React, { useEffect, useState } from "react";
+
 import InvoiceListItemTotal from './InvoiceListItemTotal';
 import Button from '../Button';
 import TextField from '../TextField';
@@ -84,8 +86,20 @@ const AddNewItemButton = styled(Button)`
   }
 `;
 
-function InvoiceItemsList({renglones}) {
+function InvoiceItemsList({deletedReglones, setDeletedReglones}) {
   const { values, errors } = useFormikContext();
+
+  useEffect(() => {
+    setDeletedReglones([]);
+  }, [setDeletedReglones]);
+
+  const handleDeleteReglones = (index) => {
+    const itemToDelete = values.reglones[index];
+    if (itemToDelete.id !==0){
+      setDeletedReglones([...deletedReglones, itemToDelete]);
+    }
+  };
+  
 
   return (
     <Wrapper>
@@ -166,7 +180,10 @@ function InvoiceItemsList({renglones}) {
                     <DeleteButton
                       aria-label="Delete invoice item"
                       type="button"
-                      onClick={() => arrayHelpers.remove(index)}>
+                      onClick={() => {
+                        handleDeleteReglones(index);
+                        arrayHelpers.remove(index);
+                      }}>
                       <DeleteIcon />
                     </DeleteButton>
                   </div>
@@ -176,11 +193,11 @@ function InvoiceItemsList({renglones}) {
             <AddNewItemButton
               type="button"
               variant="secondary"
-              onClick={() =>
+              onClick={() => {
                 arrayHelpers.push({
-                  factura_id: 9,
+                  factura_id: values.id,
                   secuencia: 0,
-                  art_id: 0,
+                  art_id: 1,
                   cantidad: 0,
                   unidadmedida_id: 0,
                   precio_unitario: 0,
@@ -188,8 +205,14 @@ function InvoiceItemsList({renglones}) {
                   recargo: 0,
                   impuesto: 0,
                   precio_total: 0,
-                })
-              }>
+                  id: 0,
+                  usu_ins_id:'0',
+                  fecha_ins: "2024-06-20T11:06:20.0715369-04:00",
+                  usu_mod_id: 'ccisneros@miprofit.com',
+                  fecha_mod: "2024-06-20T11:06:20.0715369-04:00",
+                  row_version: 'AAAAAAAAP+g='
+                });
+              }}>
               + Add New Item
             </AddNewItemButton>
             {typeof errors.items === 'string' && <span className="error">{errors.items}</span>}

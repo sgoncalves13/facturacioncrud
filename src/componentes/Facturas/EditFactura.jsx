@@ -10,6 +10,8 @@ import InvoiceFormContainer from './InvoiceForm/InvoiceFormContainer'
 
 import { motion } from 'framer-motion';
 
+import environment from '../../environment.json'
+
 const EditFactura = () =>{
     const { idFactura } = useParams();
 
@@ -36,7 +38,7 @@ const EditFactura = () =>{
 
     async function fetchFactura() {
         try {
-            const response = await fetch(`https://localhost:7207/GetById?Id=${idFactura}`, {
+            const response = await fetch(`${environment.baseUrl}/Factura/GetById?Id=${idFactura}`, {
                 headers: {
                     'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
                 }
@@ -45,8 +47,8 @@ const EditFactura = () =>{
                 throw new Error('Network response was not ok');
             }
             const jsonData = await response.json();
-            setFactura(jsonData);
-            console.log(jsonData)
+            setFactura(jsonData.value);
+            console.log(jsonData.value)
         } catch (error) {
             console.error('Error fetching invoices:', error);
             setHasError(true);

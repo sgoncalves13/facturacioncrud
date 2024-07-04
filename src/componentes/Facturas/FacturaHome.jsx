@@ -6,6 +6,8 @@ import { ListadoFacturas } from "./ListadoFacturas";
 
 import React, { useEffect, useState } from "react";
 
+import environment from '../../environment.json'
+
 const HomeHeader = styled.div`
   display: flex;
   align-items: center;
@@ -129,7 +131,7 @@ export const FacturaHome = () => {
 
     async function fetchFacturas() {
         try {
-            const response = await fetch("https://localhost:7207/GetAllCabecera", {
+            const response = await fetch(`${environment.baseUrl}/Factura/GetAllCabecera`, {
                 headers: {
                     'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
                 }

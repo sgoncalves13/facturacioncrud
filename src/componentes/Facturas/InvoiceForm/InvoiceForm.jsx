@@ -101,7 +101,7 @@ const CustomCheckbox = styled(Field)`
   }
 `;
 
-function InvoiceForm({ initialValues, validationSchema, onSubmit, saveInvoice, discard, renglones }) {
+function InvoiceForm({ initialValues, validationSchema, onSubmit, saveInvoice, discard, deletedReglones, setDeletedReglones }) {
   return (
     <Formik
       initialValues={initialValues}
@@ -189,7 +189,7 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, saveInvoice, d
                 </div>
               </AddressFieldsGrid>
             </FieldSet>
-            <InvoiceItemsList renglones={renglones}/>
+            <InvoiceItemsList deletedReglones={deletedReglones} setDeletedReglones={setDeletedReglones}/>
               <FormBottom>
                 <Button
                   type="button"
