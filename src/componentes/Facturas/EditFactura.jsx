@@ -48,7 +48,6 @@ const EditFactura = () =>{
             }
             const jsonData = await response.json();
             setFactura(jsonData.value);
-            console.log(jsonData.value)
         } catch (error) {
             console.error('Error fetching invoices:', error);
             setHasError(true);

@@ -97,11 +97,11 @@ function FormContainer({factura}) {
 
   let navigate = useNavigate();
 
-  const calcTotal = (items) => {
-    if (items.length === 1) {
-      return items[0].total;
+  const calcTotal = (reglones) => {
+    if (reglones.length === 1) {
+      return reglones[0].precio_total;
     }
-    const totals = items.map((item) => item.total);
+    const totals = reglones.map((reglon) => reglon.precio_total);
     return totals.reduce((prev, current) => prev + current);
   };
 
@@ -147,10 +147,10 @@ function FormContainer({factura}) {
       }
 
     }
-    console.log("############################")
-    console.log("REGLONES QUE CAMBIARON O NUEVOS: ",ModifiedNewReglones)
-    console.log("REGLONES VALUES:", values.reglones)
-    console.log("REGLONES ELIMINADOS:", deletedReglones)
+    // console.log("############################")
+    // console.log("REGLONES QUE CAMBIARON O NUEVOS: ",ModifiedNewReglones)
+    // console.log("REGLONES VALUES:", values.reglones)
+    // console.log("REGLONES ELIMINADOS:", deletedReglones)
 
     const facturaData = {
       infoFactura: {
@@ -167,7 +167,7 @@ function FormContainer({factura}) {
         codigo: values.codigo,
         anulado: values.anulado,
         monto_impuesto: values.monto_impuesto,
-        monto_precio_total: values.monto_precio_total,
+        monto_precio_total: calcTotal(values.reglones),
         reglones: ModifiedNewReglones.map(reglon => ({
           id: reglon.id,
           usu_ins_id: reglon.usu_ins_id,
@@ -200,7 +200,7 @@ function FormContainer({factura}) {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(facturaData),
       });
