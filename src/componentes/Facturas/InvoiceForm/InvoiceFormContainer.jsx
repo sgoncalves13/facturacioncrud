@@ -103,10 +103,52 @@ function FormContainer({factura}) {
     return totals.reduce((prev, current) => prev + current);
   };
 
+  function reglonesAreDifferent(reglon1, reglon2) {
+    const keys = new Set([...Object.keys(reglon1)]);
+
+    for (let key of keys) {
+      // console.log(reglon1[key],reglon2[key])
+      if (reglon1[key] !== reglon2[key]) {
+        return true; 
+      }
+    }
+  
+    return false; 
+  }
+
+  function CreateMap(reglones){
+    let hm = new Map();
+
+    for (let i=0;i<reglones.length;i++){
+      hm.set(reglones[i].id, reglones[i])
+    }
+
+    return hm
+  }
+
   const handleSubmit = (deletedReglones) =>(values) => {
 
-    console.log(values)
-    console.log(deletedReglones)
+    let ModifiedNewReglones = [] 
+
+    let map = CreateMap(factura.reglones)
+
+    for (let k = 0; k < values.reglones.length; k++){
+      let key = values.reglones[k].id
+      if (key !== 0){
+        let regloninitstate = map.get(key)
+
+        if (regloninitstate !== undefined && reglonesAreDifferent(values.reglones[k], regloninitstate)){
+          ModifiedNewReglones.push(values.reglones[k])
+        }
+      }else{
+        ModifiedNewReglones.push(values.reglones[k])
+      }
+
+    }
+    console.log("############################")
+    console.log("REGLONES QUE CAMBIARON O NUEVOS: ",ModifiedNewReglones)
+    console.log("REGLONES VALUES:", values.reglones)
+    console.log("REGLONES ELIMINADOS:", deletedReglones)
 
   };
 

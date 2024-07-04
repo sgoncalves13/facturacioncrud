@@ -93,11 +93,12 @@ function InvoiceItemsList({deletedReglones, setDeletedReglones}) {
     setDeletedReglones([]);
   }, [setDeletedReglones]);
 
-  const handleDeleteReglones = (index) => {
+  const handleDeleteReglones = (index, arrayHelpers) => {
     const itemToDelete = values.reglones[index];
     if (itemToDelete.id !==0){
       setDeletedReglones([...deletedReglones, itemToDelete]);
     }
+    arrayHelpers.remove(index);
   };
   
 
@@ -181,8 +182,7 @@ function InvoiceItemsList({deletedReglones, setDeletedReglones}) {
                       aria-label="Delete invoice item"
                       type="button"
                       onClick={() => {
-                        handleDeleteReglones(index);
-                        arrayHelpers.remove(index);
+                        handleDeleteReglones(index ,arrayHelpers);
                       }}>
                       <DeleteIcon />
                     </DeleteButton>
