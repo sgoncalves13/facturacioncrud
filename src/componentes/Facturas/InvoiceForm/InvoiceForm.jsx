@@ -209,6 +209,7 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, discard, delet
                   className="discard"
                   onClick={() => {
                     resetForm();
+                    setDeletedReglones([]);
                   }}>
                   Descartar todos los cambios
                 </Button>
