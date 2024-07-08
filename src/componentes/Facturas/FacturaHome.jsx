@@ -58,7 +58,7 @@ const CreateFacturaButton = styled.button`
   border: none;
   cursor: pointer;
   user-select: none;
-  background-color: blue;
+  background-color: #7C5DFA;
   color: white;
   outline: none; /* Elimina el contorno predeterminado al enfocar */
   position: relative;
@@ -66,7 +66,7 @@ const CreateFacturaButton = styled.button`
   transition: background-color 0.3s ease, transform 0.2s ease;
 
   &:hover {
-    background-color: green;
+    background-color: #01B869;
     transform: translateY(-3px); /* Efecto de levantamiento al pasar el mouse */
   }
 
@@ -158,7 +158,7 @@ export const FacturaHome = () => {
 
     return (
             <div>
-                <Header/>
+                {/* <Header/> */}
                 <MainContainer>
                 <HomeHeader>
                     <div>

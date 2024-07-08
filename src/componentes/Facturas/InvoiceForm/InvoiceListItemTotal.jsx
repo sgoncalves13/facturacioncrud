@@ -34,8 +34,10 @@ function InvoiceListItemTotal({ index }) {
   useEffect(() => {
     const quantity = reglones[index].cantidad;
     const price = reglones[index].precio_unitario;
-    if (!isNaN(quantity) && !isNaN(price)) {
-      setFieldValue(`reglones[${index}].precio_total`, quantity * price);
+    const descuento = reglones[index].descuento;
+    const recargo = reglones[index].recargo;
+    if (!isNaN(quantity) && !isNaN(price) && !isNaN(descuento) && !isNaN(recargo)) {
+      setFieldValue(`reglones[${index}].precio_total`, (quantity * price)-descuento+recargo);
     }
   }, [reglones]);
 
