@@ -106,7 +106,6 @@ function FormContainer({factura}) {
   };
 
   const handleCreate = async (values) =>{
-    console.log(values)
     values.monto_precio_total = calcTotal(values.reglones)
     try{
     const response = await fetch(`${environment.baseUrl}/Factura/CreateFactura`, {
