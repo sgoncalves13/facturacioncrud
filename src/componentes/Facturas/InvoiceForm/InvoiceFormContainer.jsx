@@ -105,9 +105,35 @@ function FormContainer({factura}) {
     return totals.reduce((prev, current) => prev + current);
   };
 
-  const handleCreate = (values) =>{
+  const handleCreate = async (values) =>{
     console.log(values)
-  }
+    values.monto_precio_total = calcTotal(values.reglones)
+    try{
+    const response = await fetch(`${environment.baseUrl}/Factura/CreateFactura`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
+      },
+      body: JSON.stringify(values),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const articuloId = data.id;
+        alert('Factura con id: ' + String(articuloId) + ' creada exitosamente');
+        navigate(`/Facturas`);
+      } else {
+        const errorText = await response.text();
+        console.error('Error:', errorText);
+        alert('Error al crear la factura' + '. Detalles: ' + errorText);
+      }
+    } catch (error) {
+      console.error('Error al realizar la solicitud:', error);
+      alert('Error al realizar la solicitud. Por favor, intenta de nuevo más tarde.');
+    }
+  };
+  
 
   function reglonesAreDifferent(reglon1, reglon2) {
     const keys = new Set([...Object.keys(reglon1)]);
