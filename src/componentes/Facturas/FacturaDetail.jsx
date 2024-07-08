@@ -279,6 +279,8 @@ const FacturaDetail = () =>{
                 {factura && (
                     <DeleteInvoiceModal
                     id={factura.id}
+                    facturaCodigo = {factura.codigo}
+                    rowversion = {factura.row_version}
                     isOpen={isDeleteModalOpen}
                     closeModal={() => setIsDeleteModalOpen(false)}
                     />

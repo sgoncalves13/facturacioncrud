@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import { Dialog } from '@headlessui/react';
-
+import environment from '../../environment.json'
 import Button from './Button';
 
 const Overlay = styled.div`
@@ -47,11 +47,34 @@ const ButtonContainer = styled.div`
   gap: 8px;
 `;
 
-function DeleteInvoiceModal({ id, isOpen, closeModal }) {
+function DeleteInvoiceModal({ id, facturaCodigo, rowversion, isOpen, closeModal }) {
   const navigate = useNavigate();
 
-  const deleteInvoice = () => {
-    navigate('/Facturas');
+  const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
+
+  const deleteInvoice = async () => {
+
+    const FacturaDelete = {
+      id: id,
+      rowVersion: rowversion
+    }
+
+    const response = await fetch(`${environment.baseUrl}/Factura/DeleteFactura`, {
+      method: 'DELETE',
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
+      },
+      body: JSON.stringify(FacturaDelete),
+  });
+    if (response.ok) {
+      alert('Factura con id: ' +String(id)+ ' eliminado exitosamente');
+      navigate('/Facturas');
+    } else {
+    const errorText = await response.text();
+    console.error('Error:', errorText);
+    alert('Error al eliminar la factura con id: ' + String(id) + '. Detalles: ' + errorText);
+    }
   };
 
   return (
@@ -60,7 +83,7 @@ function DeleteInvoiceModal({ id, isOpen, closeModal }) {
       <ModalContainer>
         <ModalHeading>Confirm Deletion</ModalHeading>
         <ModalMessage>
-         ¿Estas seguro que quieres eliminar la factura #{id}? Esta acción no se puede deshacer.
+         ¿Estas seguro que quieres eliminar la factura #{facturaCodigo}? Esta acción no se puede deshacer.
         </ModalMessage>
         <ButtonContainer>
           <Button variant="secondary" onClick={closeModal}>
