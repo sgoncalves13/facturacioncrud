@@ -98,12 +98,12 @@ const ArrowIcon = styled.div`
   }
 `;
 
-function InvoiceItem({ idFactura, Usuario, precioTotal, fechaIns, status}) {
+function InvoiceItem({ idFactura, codigoFactura, Usuario, precioTotal, fechaIns, status}) {
   const formattedDueDate = `${formatDate(fechaIns)}`;
   const formattedTotal = formatPrice(precioTotal);
   return (
     <Wrapper to={`/Facturas/${idFactura}`} aria-label={`${Usuario} - View Invoice`}>
-      <InvoiceID>{idFactura}</InvoiceID>
+      <InvoiceID>{codigoFactura}</InvoiceID>
       <DueDate>{formattedDueDate}</DueDate>
       <ClientName>{Usuario}</ClientName>
       <Amount>{formattedTotal}</Amount>

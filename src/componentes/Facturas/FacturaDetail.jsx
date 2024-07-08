@@ -238,7 +238,7 @@ const FacturaDetail = () =>{
                     <DetailsCard>
                         <DetailsCardGrid>
                         <InvoiceIdName className="invoice-id-name">
-                            <InvoiceID>{factura.id}</InvoiceID>
+                            <InvoiceID>{factura.codigo}</InvoiceID>
                             <InvoiceName>Observación: {factura.observacion}</InvoiceName>
                         </InvoiceIdName>
                         <div className="invoice-dates">

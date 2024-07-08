@@ -102,7 +102,7 @@ const CustomCheckbox = styled(Field)`
   }
 `;
 
-function InvoiceForm({ initialValues, validationSchema, onSubmit, discard, deletedReglones, setDeletedReglones }) {
+function InvoiceForm({ initialValues, validationSchema, onSubmit, deletedReglones, setDeletedReglones }) {
   let navigate = useNavigate()
   return (
     <Formik

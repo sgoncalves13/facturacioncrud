@@ -98,7 +98,10 @@ function FormContainer({factura}) {
   let navigate = useNavigate();
 
   const calcTotal = (reglones) => {
-    if (reglones.length === 1) {
+    if (reglones.length === 0){
+      return 0
+    }
+    else if (reglones.length === 1) {
       return reglones[0].precio_total;
     }
     const totals = reglones.map((reglon) => reglon.precio_total);
@@ -260,7 +263,7 @@ function FormContainer({factura}) {
     <DivExterno>
       <FormHeading>
       {factura ? (
-          <span>Edit {factura.id}</span>
+          <span>Edit {factura.codigo}</span>
         ) : (
           <span>Crear Factura</span>
         )}
@@ -268,7 +271,6 @@ function FormContainer({factura}) {
       <InvoiceForm
         validationSchema={validationSchema}
         initialValues={factura || initialValues}
-        discard={discard}
         onSubmit={factura ? handleSubmit(deletedReglones) : handleCreate}
         deletedReglones={deletedReglones}
         setDeletedReglones={setDeletedReglones}
