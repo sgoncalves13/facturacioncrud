@@ -7,6 +7,7 @@ import { ListadoFacturas } from "./ListadoFacturas";
 import React, { useEffect, useState } from "react";
 
 import environment from '../../environment.json'
+import { useNavigate } from "react-router-dom";
 
 const HomeHeader = styled.div`
   display: flex;
@@ -123,6 +124,7 @@ const CreateFacturaButton = styled.button`
 
 export const FacturaHome = () => {
 
+  const navigate = useNavigate()
   const [facturas, setFacturas] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
@@ -163,7 +165,7 @@ export const FacturaHome = () => {
                     <Heading>Facturas</Heading>
                     <p>Conteo Facturas: {String(facturas.length)}</p>
                     </div>
-                    <CreateFacturaButton>Crear factura</CreateFacturaButton>
+                    <CreateFacturaButton onClick={() => {navigate('/Facturas/Create')}}>Crear factura</CreateFacturaButton>
                 </HomeHeader>
                     <div>
                     <ListadoFacturas facturas={facturas} isLoading={isLoading} hasError={hasError}/>

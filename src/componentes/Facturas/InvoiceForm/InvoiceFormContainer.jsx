@@ -105,6 +105,10 @@ function FormContainer({factura}) {
     return totals.reduce((prev, current) => prev + current);
   };
 
+  const handleCreate = (values) =>{
+    console.log(values)
+  }
+
   function reglonesAreDifferent(reglon1, reglon2) {
     const keys = new Set([...Object.keys(reglon1)]);
 
@@ -230,13 +234,17 @@ function FormContainer({factura}) {
   return (
     <DivExterno>
       <FormHeading>
-        Edit <span>{factura.id}</span>
+      {factura ? (
+          <span>Edit {factura.id}</span>
+        ) : (
+          <span>Crear Factura</span>
+        )}
       </FormHeading>
       <InvoiceForm
         validationSchema={validationSchema}
         initialValues={factura || initialValues}
         discard={discard}
-        onSubmit={handleSubmit(deletedReglones)}
+        onSubmit={factura ? handleSubmit(deletedReglones) : handleCreate}
         deletedReglones={deletedReglones}
         setDeletedReglones={setDeletedReglones}
       />
