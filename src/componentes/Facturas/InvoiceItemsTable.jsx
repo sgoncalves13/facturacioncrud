@@ -32,6 +32,14 @@ const ItemPriceHead = styled(TableHead)`
   text-align: right;
 `;
 
+const ItemDescuentoHead = styled(TableHead)`
+  text-align: right;
+`;
+
+const ItemRecargoHead = styled(TableHead)`
+  text-align: right;
+`;
+
 const ItemTotalHead = styled(TableHead)`
   text-align: right;
 `;
@@ -53,6 +61,14 @@ const ItemQtyCol = styled.td`
 `;
 
 const ItemPriceCol = styled.td`
+  text-align: right;
+`;
+
+const ItemDescuentoCol = styled.td`
+  text-align: right;
+`;
+
+const ItemRecargoCol = styled.td`
   text-align: right;
 `;
 
@@ -90,16 +106,20 @@ function InvoiceItemsTable({ anulado, id, renglones, total }) {
           <ItemNameHead>Id Articulo</ItemNameHead>
           <ItemQtyHead>Cantidad</ItemQtyHead>
           <ItemPriceHead>Precio Unitario</ItemPriceHead>
+          <ItemDescuentoHead>Descuento</ItemDescuentoHead>
+          <ItemRecargoHead>Recargo</ItemRecargoHead>
           <ItemTotalHead>Precio Total</ItemTotalHead>
         </tr>
       </thead>
       <Body>
-        {renglones.map(({ art_id, precio_unitario, cantidad, precio_total }, index) => {
+        {renglones.map(({ art_id, precio_unitario, cantidad, descuento, recargo, precio_total }, index) => {
           return (
             <tr key={index + id}>
               <ItemNameCol>{art_id}</ItemNameCol>
               <ItemQtyCol>{cantidad}</ItemQtyCol>
               <ItemPriceCol>{formatPrice(precio_unitario)}</ItemPriceCol>
+              <ItemDescuentoCol>{formatPrice(descuento)}</ItemDescuentoCol>
+              <ItemRecargoCol>{formatPrice(recargo)}</ItemRecargoCol>
               <ItemTotalCol>{formatPrice(precio_total)}</ItemTotalCol>
             </tr>
           );
@@ -108,7 +128,7 @@ function InvoiceItemsTable({ anulado, id, renglones, total }) {
       <Footer>
         <tr>
           <TotalLabel>{anulado === 'true' ? 'Precio Final' : 'Precio Total'}</TotalLabel>
-          <InvoiceTotal colSpan={3}>{formatPrice(total)}</InvoiceTotal>
+          <InvoiceTotal colSpan={5}>{formatPrice(total)}</InvoiceTotal>
         </tr>
       </Footer>
     </Table>
