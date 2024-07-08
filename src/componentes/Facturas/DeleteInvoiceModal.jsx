@@ -68,7 +68,7 @@ function DeleteInvoiceModal({ id, facturaCodigo, rowversion, isOpen, closeModal 
       body: JSON.stringify(FacturaDelete),
   });
     if (response.ok) {
-      alert('Factura con id: ' +String(id)+ ' eliminado exitosamente');
+      alert('Factura con id: ' +String(id)+ ' eliminada exitosamente');
       navigate('/Facturas');
     } else {
     const errorText = await response.text();
