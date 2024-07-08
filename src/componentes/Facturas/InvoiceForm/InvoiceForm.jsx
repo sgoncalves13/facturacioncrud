@@ -198,9 +198,14 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, discard, delet
                   variant="secondary"
                   className="discard"
                   onClick={() => {
-                    resetForm();
-                    navigate(`/Facturas/${values.id}`);
-                  }}>
+                      resetForm();
+                      if (values.id === 0) {
+                        navigate('/Facturas');
+                      } else {
+                        navigate(`/Facturas/${values.id}`);;
+                      }
+                    }
+                  }>
                   Cancel
                 </Button>
                 <Button
