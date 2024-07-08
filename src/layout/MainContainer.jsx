@@ -5,7 +5,7 @@ import deviceSize from '../styles/breakpoints';
 
 const Wrapper = styled.main`
   width: 100%;
-  padding: 2rem 1.5rem 6.5625rem 1.5rem;
+  padding: 2rem 0.5rem 6.5625rem 0.5rem;
   margin: 0 auto;
 
   @media screen and (min-width: ${deviceSize.md}) {

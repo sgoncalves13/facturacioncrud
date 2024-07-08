@@ -239,7 +239,7 @@ const FacturaDetail = () =>{
                         <DetailsCardGrid>
                         <InvoiceIdName className="invoice-id-name">
                             <InvoiceID>{factura.codigo}</InvoiceID>
-                            <InvoiceName>Observación: {factura.observacion}</InvoiceName>
+                            <InvoiceName>Descripción Cliente: {factura.cliente_descripcion}</InvoiceName>
                         </InvoiceIdName>
                         <div className="invoice-dates">
                             <InvoiceInfo
@@ -254,7 +254,7 @@ const FacturaDetail = () =>{
                             />
                         </div>
                         <div className="client-name-address">
-                            <InvoiceInfo className="client-name" label="Usuario Inscribir" value={factura.usu_ins_id} />
+                            <InvoiceInfo className="client-name" label="Observación" value={factura.observacion} />
                         </div>
                         <InvoiceInfo className="client-email" label="Usuario Modificar" value={factura.usu_mod_id} />
                         </DetailsCardGrid>

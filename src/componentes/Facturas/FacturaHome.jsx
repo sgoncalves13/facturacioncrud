@@ -142,7 +142,7 @@ export const FacturaHome = () => {
                 throw new Error('Network response was not ok');
             }
             const jsonData = await response.json();
-            setFacturas(jsonData);
+            setFacturas(jsonData.value);
             console.log(jsonData)
         } catch (error) {
             console.error('Error fetching invoices:', error);

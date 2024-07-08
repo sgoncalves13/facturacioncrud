@@ -115,6 +115,15 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, deletedReglone
           <Form>
             <FieldSet>
               <Legend>Factura</Legend>
+              {/* <div>
+                <FormTextField
+                  label="Descripción Cliente"
+                  id="cliente_id"
+                  name="cliente_id"
+                  type="string"
+                  aria-required="true"
+                />
+              </div> */}
               <div>
                 <FormTextField
                   label="ID Cliente"

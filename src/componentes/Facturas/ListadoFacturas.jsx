@@ -50,7 +50,7 @@ export const ListadoFacturas= ({facturas, isLoading, hasError}) =>{
           animate="visible">
           {facturas.map((factura) => (
             <motion.li variants={invoiceListItemVariants} key={factura.id}>
-              <InvoiceItem idFactura={factura.id} codigoFactura={factura.codigo} Usuario={factura.usu_ins_id} precioTotal={factura.monto_precio_total} fechaIns={factura.fecha_emision} status={factura.anulado} />
+              <InvoiceItem idFactura={factura.id} codigoFactura={factura.codigo} Usuario={factura.usu_ins_id} precioTotal={factura.monto_precio_total} cliente_descripcion={factura.cliente_descripcion} status={factura.anulado} />
             </motion.li>
           ))}
         </InvoicesList>
