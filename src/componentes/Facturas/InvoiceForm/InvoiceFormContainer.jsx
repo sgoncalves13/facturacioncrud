@@ -40,6 +40,7 @@ const FormHeading = styled.span`
 
 const initialValues = {
   cliente_id: null,
+  cliente_descripcion: null,
   fecha_registro: new Date(),
   fecha_emision: new Date(),
   observacion: '',

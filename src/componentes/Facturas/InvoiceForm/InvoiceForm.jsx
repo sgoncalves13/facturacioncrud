@@ -106,12 +106,22 @@ const CustomCheckbox = styled(Field)`
 `;
 
 function InvoiceForm({ initialValues, validationSchema, onSubmit, deletedReglones, setDeletedReglones }) {
-  const [inputValue, setInputValue] = useState(null);
+
+  let clienteinicial = null
+
+  if (initialValues.cliente_id !== null){
+    clienteinicial = {
+      description: initialValues.cliente_descripcion,
+      id: initialValues.cliente_id
+    }
+  }
+  const [inputValue, setInputValue] = useState(clienteinicial);
   const [options, setOptions] = useState([
     { description: 'Carnicería', id: 1 },
     { description: 'Panadería', id: 2 },
     { description: 'Ferretería', id: 3 }
   ]);
+  console.log(inputValue)
   let navigate = useNavigate()
   return (
     <Formik
@@ -129,7 +139,7 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, deletedReglone
                   id="free-solo-demo"
                   freeSolo
                   options={options}
-                  value = {inputValue}
+                  value= {inputValue}
                   onChange={(e, newValue) => {
                     if (newValue === null){setFieldValue("cliente_id", null)}
                     else{
