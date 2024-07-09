@@ -37,7 +37,7 @@ function InvoiceListItemTotal({ index }) {
     const descuento = reglones[index].descuento;
     const recargo = reglones[index].recargo;
     if (!isNaN(quantity) && !isNaN(price) && !isNaN(descuento) && !isNaN(recargo)) {
-      setFieldValue(`reglones[${index}].precio_total`, (quantity * price)+recargo-descuento);
+      setFieldValue(`reglones[${index}].precio_total`, (quantity * price)+(recargo-descuento));
     }
   }, [reglones]);
 
