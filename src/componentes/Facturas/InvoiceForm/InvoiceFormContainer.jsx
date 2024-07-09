@@ -39,7 +39,7 @@ const FormHeading = styled.span`
 `;
 
 const initialValues = {
-  cliente_id: 0,
+  cliente_id: null,
   fecha_registro: new Date(),
   fecha_emision: new Date(),
   observacion: '',
@@ -53,12 +53,13 @@ const initialValues = {
   fecha_mod: null,
   row_version: null,
   reglones: [],
-  monto_precio_total: 0
+  monto_precio_total: 0,
 };
 
 
 const validationSchema = Yup.object({
-  cliente_id: Yup.number().required('require'),
+  cliente_id: Yup.number().nullable().required('required'),
+  // cliente_id: Yup.number().required('required'),
   fecha_registro: Yup.date().required('required'),
   fecha_emision: Yup.date().required('required'),
   observacion: Yup.string().required('required'),
@@ -109,32 +110,33 @@ function FormContainer({factura}) {
   };
 
   const handleCreate = async (values) =>{
-    values.monto_precio_total = calcTotal(values.reglones)
-    try{
-    const response = await fetch(`${environment.baseUrl}/Factura/CreateFactura`, {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
-      },
-      body: JSON.stringify(values),
-      });
+    console.log(values)
+    // values.monto_precio_total = calcTotal(values.reglones)
+    // try{
+    // const response = await fetch(`${environment.baseUrl}/Factura/CreateFactura`, {
+    //   method: 'POST',
+    //   headers: {
+    //       'Content-Type': 'application/json',
+    //       'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
+    //   },
+    //   body: JSON.stringify(values),
+    //   });
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data)
-        const articuloId = data.value.id;
-        alert('Factura con id: ' + String(articuloId) + ' creada exitosamente');
-        navigate(`/Facturas`);
-      } else {
-        const errorText = await response.text();
-        console.error('Error:', errorText);
-        alert('Error al crear la factura' + '. Detalles: ' + errorText);
-      }
-    } catch (error) {
-      console.error('Error al realizar la solicitud:', error);
-      alert('Error al realizar la solicitud. Por favor, intenta de nuevo más tarde.');
-    }
+    //   if (response.ok) {
+    //     const data = await response.json();
+    //     console.log(data)
+    //     const articuloId = data.value.id;
+    //     alert('Factura con id: ' + String(articuloId) + ' creada exitosamente');
+    //     navigate(`/Facturas`);
+    //   } else {
+    //     const errorText = await response.text();
+    //     console.error('Error:', errorText);
+    //     alert('Error al crear la factura' + '. Detalles: ' + errorText);
+    //   }
+    // } catch (error) {
+    //   console.error('Error al realizar la solicitud:', error);
+    //   alert('Error al realizar la solicitud. Por favor, intenta de nuevo más tarde.');
+    // }
   };
   
 

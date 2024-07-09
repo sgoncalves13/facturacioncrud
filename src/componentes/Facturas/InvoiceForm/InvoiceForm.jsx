@@ -1,8 +1,11 @@
 import { Formik, Form, Field } from 'formik';
+import React, { useEffect, useState } from "react";
 import { nanoid } from 'nanoid';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import { useNavigate } from 'react-router-dom';
+import MUITextfield from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 import TextField from '../TextField';
 import Button from '../Button';
@@ -103,6 +106,12 @@ const CustomCheckbox = styled(Field)`
 `;
 
 function InvoiceForm({ initialValues, validationSchema, onSubmit, deletedReglones, setDeletedReglones }) {
+  const [inputValue, setInputValue] = useState(null);
+  const [options, setOptions] = useState([
+    { description: 'Carnicería', id: 1 },
+    { description: 'Panadería', id: 2 },
+    { description: 'Ferretería', id: 3 }
+  ]);
   let navigate = useNavigate()
   return (
     <Formik
@@ -110,21 +119,38 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, deletedReglone
       validationSchema={validationSchema}
       onSubmit={onSubmit}
       enableReinitialize={true}>
-      {({ values, errors, setFieldValue, resetForm }) => {
+      {({ values, errors, setFieldValue, resetForm, touched }) => {
+        
         return (
           <Form>
             <FieldSet>
               <Legend>Factura</Legend>
-              {/* <div>
-                <FormTextField
-                  label="Descripción Cliente"
-                  id="cliente_id"
-                  name="cliente_id"
-                  type="string"
-                  aria-required="true"
+              <Autocomplete
+                  id="free-solo-demo"
+                  freeSolo
+                  options={options}
+                  value = {inputValue}
+                  onChange={(e, newValue) => {
+                    if (newValue === null){setFieldValue("cliente_id", null)}
+                    else{
+                      setInputValue(newValue)
+                      setFieldValue("cliente_id", newValue.id)
+                    }
+                  }}
+                  getOptionLabel={(option) => option.description}
+                  renderInput={(params) => (
+                    <MUITextfield
+                      {...params}
+                      label="Cliente"
+                      error={errors.cliente_id && touched.cliente_id}
+                      helperText={touched.cliente_id && errors.cliente_id}
+                      InputProps={{
+                        ...params.InputProps,
+                      }}
+                    />
+                  )}
                 />
-              </div> */}
-              <div>
+              {/* <div>
                 <FormTextField
                   label="ID Cliente"
                   id="cliente_id"
@@ -132,7 +158,7 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, deletedReglone
                   type="number"
                   aria-required="true"
                 />
-              </div>
+              </div> */}
               <InvoiceDatesGrid>
               <div>
                 <DatePickerField
