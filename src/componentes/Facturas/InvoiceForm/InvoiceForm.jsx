@@ -121,6 +121,11 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, deletedReglone
     { description: 'Panadería', id: 2 },
     { description: 'Ferretería', id: 3 }
   ]);
+
+  const simulacionFecth = (texto) =>{
+    console.log(texto)
+    console.log(options)
+  }
   console.log(inputValue)
   let navigate = useNavigate()
   return (
@@ -140,6 +145,9 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, deletedReglone
                   freeSolo
                   options={options}
                   value= {inputValue}
+                  onInputChange={(e, newValue) =>{
+                    simulacionFecth(newValue);
+                  }}
                   onChange={(e, newValue) => {
                     if (newValue === null){setFieldValue("cliente_id", null)}
                     else{
