@@ -176,7 +176,6 @@ async function fetchDescripcionesClientes(texto) {
                   freeSolo
                   options={options}
                   value= {inputValue}
-                  noOptionsText = {'Your Customized No Options Text'}
                   onInputChange={(e, newValue) =>{
                     fetchDescripcionesClientes(newValue);
                   }}
