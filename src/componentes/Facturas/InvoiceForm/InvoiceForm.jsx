@@ -145,7 +145,6 @@ async function fetchDescripcionesClientes(texto) {
           }
           const jsonData = await response.json();
           setOptions(jsonData)
-          console.log("Opciones", jsonData);
       } catch (error) {
           console.error('Error fetching invoices:', error);
       }
@@ -153,10 +152,6 @@ async function fetchDescripcionesClientes(texto) {
   }
 }
 
-  const simulacionFecth = (texto) =>{
-    console.log(texto)
-    console.log(options)
-  }
   console.log(inputValue)
   let navigate = useNavigate()
   return (
@@ -190,6 +185,7 @@ async function fetchDescripcionesClientes(texto) {
                     }
                   }}
                   getOptionLabel={(option) => option.descripcion}
+                  style={{ width: 350 }}
                   renderInput={(params) => (
                     <MUITextfield
                       {...params}
