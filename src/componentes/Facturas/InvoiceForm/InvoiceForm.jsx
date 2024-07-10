@@ -173,14 +173,17 @@ async function fetchDescripcionesClientes(texto) {
               <Legend>Factura</Legend>
               <Autocomplete
                   id="free-solo-demo"
-                  freeSolo
                   options={options}
                   value= {inputValue}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
                   onInputChange={(e, newValue) =>{
                     fetchDescripcionesClientes(newValue);
                   }}
                   onChange={(e, newValue) => {
-                    if (newValue === null){setFieldValue("cliente_id", null)}
+                    if (newValue === null){
+                      setInputValue(null);
+                      setFieldValue("cliente_id", null);
+                    }
                     else{
                       setInputValue(newValue)
                       setFieldValue("cliente_id", newValue.id)
