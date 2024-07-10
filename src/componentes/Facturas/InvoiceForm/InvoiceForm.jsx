@@ -6,6 +6,7 @@ import DatePicker from 'react-datepicker';
 import { useNavigate } from 'react-router-dom';
 import MUITextfield from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import environment from '../../../environment.json'
 
 import TextField from '../TextField';
 import Button from '../Button';
@@ -111,16 +112,46 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, deletedReglone
 
   if (initialValues.cliente_id !== null){
     clienteinicial = {
-      description: initialValues.cliente_descripcion,
+      descripcion: initialValues.cliente_descripcion,
       id: initialValues.cliente_id
     }
   }
   const [inputValue, setInputValue] = useState(clienteinicial);
-  const [options, setOptions] = useState([
-    { description: 'Carnicería', id: 1 },
-    { description: 'Panadería', id: 2 },
-    { description: 'Ferretería', id: 3 }
-  ]);
+  const [options, setOptions] = useState([]);
+
+  const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
+
+  let debounceTimeout;
+
+async function fetchDescripcionesClientes(texto) {
+
+   if (texto === ""){
+    setOptions([])
+   }
+   else{
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
+  }
+    debounceTimeout = setTimeout(async () => {
+      try {
+          const response = await fetch(`${environment.baseUrl}/Cliente/GetClienteByDesc?strDesc=${texto}`, {
+              headers: {
+                  'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
+              }
+          });
+
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          const jsonData = await response.json();
+          setOptions(jsonData)
+          console.log("Opciones", jsonData);
+      } catch (error) {
+          console.error('Error fetching invoices:', error);
+      }
+    }, 700);
+  }
+}
 
   const simulacionFecth = (texto) =>{
     console.log(texto)
@@ -146,7 +177,7 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, deletedReglone
                   options={options}
                   value= {inputValue}
                   onInputChange={(e, newValue) =>{
-                    simulacionFecth(newValue);
+                    fetchDescripcionesClientes(newValue);
                   }}
                   onChange={(e, newValue) => {
                     if (newValue === null){setFieldValue("cliente_id", null)}
@@ -155,7 +186,7 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit, deletedReglone
                       setFieldValue("cliente_id", newValue.id)
                     }
                   }}
-                  getOptionLabel={(option) => option.description}
+                  getOptionLabel={(option) => option.descripcion}
                   renderInput={(params) => (
                     <MUITextfield
                       {...params}
