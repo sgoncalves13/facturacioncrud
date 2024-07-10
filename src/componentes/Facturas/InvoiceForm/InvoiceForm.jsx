@@ -173,9 +173,10 @@ async function fetchDescripcionesClientes(texto) {
               <Legend>Factura</Legend>
               <Autocomplete
                   id="free-solo-demo"
-                  freeSolo
                   options={options}
+                  noOptionsText={"No encontrado..."}
                   value= {inputValue}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
                   onInputChange={(e, newValue) =>{
                     fetchDescripcionesClientes(newValue);
                   }}
@@ -190,7 +191,7 @@ async function fetchDescripcionesClientes(texto) {
                   renderInput={(params) => (
                     <MUITextfield
                       {...params}
-                      label="Cliente"
+                      label="Descripción del cliente"
                       error={errors.cliente_id && touched.cliente_id}
                       helperText={touched.cliente_id && errors.cliente_id}
                       InputProps={{
