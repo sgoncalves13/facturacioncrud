@@ -173,10 +173,10 @@ async function fetchDescripcionesClientes(texto) {
               <Legend>Factura</Legend>
               <Autocomplete
                   id="free-solo-demo"
+                  freeSolo
                   options={options}
-                  noOptionsText={"No encontrado..."}
                   value= {inputValue}
-                  isOptionEqualToValue={(option, value) => option.id === value.id}
+                  noOptionsText = {'Your Customized No Options Text'}
                   onInputChange={(e, newValue) =>{
                     fetchDescripcionesClientes(newValue);
                   }}
