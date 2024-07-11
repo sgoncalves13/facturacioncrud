@@ -14,15 +14,15 @@ const HomeHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-bottom: 2rem;
+  margin-bottom: 40px;
   & > div:first-child {
     margin-right: auto;
   }
   @media screen and (min-width: ${deviceSize.md}) {
-    margin-bottom: 3.5rem;
+    margin-bottom: 1.5rem;
   }
   @media screen and (min-width: ${deviceSize.lg}) {
-    margin-bottom: 4.0625rem;
+    margin-bottom: 2.0625rem;
   }
 `;
 
@@ -179,11 +179,11 @@ export const FacturaHome = () => {
                     </div>
                     <CreateFacturaButton onClick={() => {navigate('/Facturas/Create')}}>Crear factura</CreateFacturaButton>
                 </HomeHeader>
+                <div className="Pagination">
+                      <PaginationFacturas totalPages={countPages} currentPage={currentPage} onPageChange={handlePageChange}/>
+                    </div>
                     <div>
                     <ListadoFacturas facturas={facturas} isLoading={isLoading} hasError={hasError}/>
-                    </div>
-                    <div className="Pagination">
-                      <PaginationFacturas totalPages={countPages} currentPage={currentPage} onPageChange={handlePageChange}/>
                     </div>
                 </MainContainer>
             </div>
