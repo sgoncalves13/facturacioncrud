@@ -210,7 +210,7 @@ const FacturaDetail = () =>{
             <MainContainer>
                 <BackButton to="/Facturas">
                     <img src={IconArrowLeft} alt="" />
-                    Go back
+                    Regresar
                 </BackButton>
                 {factura && (
                     <>

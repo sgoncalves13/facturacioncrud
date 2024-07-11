@@ -153,7 +153,7 @@ export const FacturaHome = () => {
             setCountPages(values.countPages)
             console.log(jsonData)
         } catch (error) {
-            console.error('Error fetching invoices:', error);
+            console.error('Error fetching facturas:', error);
             setHasError(true);
         } finally {
             setIsLoading(false);
