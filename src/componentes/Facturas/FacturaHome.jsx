@@ -130,7 +130,7 @@ export const FacturaHome = () => {
   const [count, setCount] = useState(null)
   const [countPages, setCountPages] = useState(null)
   const [currentPage, setCurrentPage] = useState(1);
-  const [quantityPerPage, setQuantityPerPage] = useState(3);
+  const [quantityPerPage, setQuantityPerPage] = useState(5);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
