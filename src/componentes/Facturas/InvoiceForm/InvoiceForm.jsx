@@ -185,7 +185,15 @@ async function fetchDescripcionesClientes(texto) {
                     }
                   }}
                   getOptionLabel={(option) => option.descripcion}
-                  style={{ width: 350 }}
+                  style={{
+                    maxWidth: 500,
+                    borderColor: "#DFE3FA",
+                    outline: "none", 
+                    ":focus": {
+                      borderColor: "#9277ff",
+                    }
+                  }}
+                  
                   renderInput={(params) => (
                     <MUITextfield
                       {...params}
@@ -298,6 +306,8 @@ async function fetchDescripcionesClientes(texto) {
                   onClick={() => {
                     resetForm();
                     setDeletedReglones([]);
+                    setInputValue(null);
+                    setFieldValue("cliente_id", null);
                   }}>
                   Descartar todos los cambios
                 </Button>

@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 
 import environment from '../../environment.json'
 import { useNavigate } from "react-router-dom";
+import PaginationFacturas from "./PaginationFactura";
 
 const HomeHeader = styled.div`
   display: flex;
@@ -126,14 +127,18 @@ export const FacturaHome = () => {
 
   const navigate = useNavigate()
   const [facturas, setFacturas] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [hasError, setHasError] = useState(false);
+  const [count, setCount] = useState(null)
+  const [countPages, setCountPages] = useState(null)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [quantityPerPage, setQuantityPerPage] = useState(3);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
-    const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
+  const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
 
-    async function fetchFacturas() {
+    async function fetchFacturas(page, quantityPerPage) {
         try {
-            const response = await fetch(`${environment.baseUrl}/Factura/GetAllCabecera`, {
+            const response = await fetch(`${environment.baseUrl}/Factura/GetAllCabeceraPage?Page=${page}&QuantityPerPage=${quantityPerPage}`, {
                 headers: {
                     'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
                 }
@@ -142,7 +147,10 @@ export const FacturaHome = () => {
                 throw new Error('Network response was not ok');
             }
             const jsonData = await response.json();
-            setFacturas(jsonData.value);
+            const values = jsonData.value
+            setFacturas(values.listCabeceras);
+            setCount(values.count)
+            setCountPages(values.countPages)
             console.log(jsonData)
         } catch (error) {
             console.error('Error fetching invoices:', error);
@@ -152,9 +160,13 @@ export const FacturaHome = () => {
         }
     }
 
+    const handlePageChange = (page) => {
+      setCurrentPage(page);
+    };
+
     useEffect(() => {
-        fetchFacturas();
-    }, []); 
+        fetchFacturas(currentPage, quantityPerPage);
+    }, [currentPage, quantityPerPage]); 
 
     return (
             <div>
@@ -163,12 +175,15 @@ export const FacturaHome = () => {
                 <HomeHeader>
                     <div>
                     <Heading>Facturas</Heading>
-                    <p>Conteo Facturas: {String(facturas.length)}</p>
+                    <p>Conteo Facturas: {String(count)}</p>
                     </div>
                     <CreateFacturaButton onClick={() => {navigate('/Facturas/Create')}}>Crear factura</CreateFacturaButton>
                 </HomeHeader>
                     <div>
                     <ListadoFacturas facturas={facturas} isLoading={isLoading} hasError={hasError}/>
+                    </div>
+                    <div className="Pagination">
+                      <PaginationFacturas totalPages={countPages} currentPage={currentPage} onPageChange={handlePageChange}/>
                     </div>
                 </MainContainer>
             </div>
