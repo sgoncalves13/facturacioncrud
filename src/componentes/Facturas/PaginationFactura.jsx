@@ -15,7 +15,7 @@ const PaginationFacturas = ({ totalPages, currentPage, onPageChange }) => {
 
   return (
     <div className="paginationFacturas">
-      <button onClick={() => handleClick(1)} disabled={currentPage === 1}>
+      <button onClick={() => handleClick(1)} disabled={currentPage === 1} className='ButtonFirstPag'>
         Primera
       </button>
       <button  className={currentPage === 1 ? 'pagination__arrow pagination__arrow--disabled' : 'pagination__arrow'} onClick={() => handleClick(currentPage - 1)} disabled={currentPage === 1}>
@@ -37,8 +37,8 @@ const PaginationFacturas = ({ totalPages, currentPage, onPageChange }) => {
       <span className="pagination__arrow-half"></span>
       <span className="pagination__arrow-half"></span>
       </button>
-      <button onClick={() => handleClick(totalPages)} disabled={currentPage === totalPages}>
-        Ultima
+      <button onClick={() => handleClick(totalPages)} disabled={currentPage === totalPages} className='ButtonUltPag'>
+        Última
       </button>
     </div>
   );
