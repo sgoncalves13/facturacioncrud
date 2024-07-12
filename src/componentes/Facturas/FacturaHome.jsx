@@ -175,7 +175,10 @@ export const FacturaHome = () => {
                 <HomeHeader>
                     <div>
                     <Heading>Facturas</Heading>
-                    <p>Conteo Facturas: {String(count)}</p>
+                    {count !== null ? 
+                    ( <p>Conteo Facturas: {String(count)}</p>):
+                    (<p></p>)
+                    }
                     </div>
                     <CreateFacturaButton onClick={() => {navigate('/Facturas/Create')}}>Crear factura</CreateFacturaButton>
                 </HomeHeader>

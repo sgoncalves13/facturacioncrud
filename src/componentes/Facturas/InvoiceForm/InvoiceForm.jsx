@@ -306,8 +306,8 @@ async function fetchDescripcionesClientes(texto) {
                   onClick={() => {
                     resetForm();
                     setDeletedReglones([]);
-                    setInputValue(null);
-                    setFieldValue("cliente_id", null);
+                    setInputValue(clienteinicial);
+                    //setFieldValue("cliente_id", null);
                   }}>
                   Descartar todos los cambios
                 </Button>
