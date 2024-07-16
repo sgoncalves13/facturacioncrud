@@ -4,20 +4,20 @@ import styled from 'styled-components';
 
 import { useParams, Link } from 'react-router-dom';
 
-import useWindowSize from '../../hooks/useWindowSize';
+import useWindowSize from '../../../hooks/useWindowSize';
 
-import InvoiceFormContainer from './InvoiceForm/InvoiceFormContainer'
+import ClienteFormContainer from "./ClienteFormContainer";
 
 import { motion } from 'framer-motion';
 
-import environment from '../../environment.json'
+import environment from '../../../environment.json'
 
-const EditFactura = () =>{
-    const { idFactura } = useParams();
+const EditCliente = () =>{
+    const { idCliente } = useParams();
 
     const windowSize = useWindowSize();
 
-    const[factura, setFactura] = useState(null)
+    const[cliente, setCliente] = useState(null)
     const [isLoading, setIsLoading] = useState(true);
     const [hasError, setHasError] = useState(false);
 
@@ -36,9 +36,9 @@ const EditFactura = () =>{
         exit: { opacity: 0, x: -100 },
       };
 
-    async function fetchFactura() {
+    async function fetchCliente() {
         try {
-            const response = await fetch(`${environment.baseUrl}/Factura/GetById?Id=${idFactura}`, {
+            const response = await fetch(`${environment.baseUrl}/Cliente/GetClienteById?iId=${idCliente}`, {
                 headers: {
                     'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
                 }
@@ -47,9 +47,10 @@ const EditFactura = () =>{
                 throw new Error('Network response was not ok');
             }
             const jsonData = await response.json();
-            setFactura(jsonData.value);
+            setCliente(jsonData.value);
+            console.log(jsonData.value)
         } catch (error) {
-            console.error('Error fetching invoices:', error);
+            console.error('Error fetching cliente:', error);
             setHasError(true);
         } finally {
             setIsLoading(false);
@@ -57,7 +58,7 @@ const EditFactura = () =>{
     }
 
     useEffect(() => {
-        fetchFactura();
+        fetchCliente();
     }, []);
 
     if (isLoading) {
@@ -65,7 +66,7 @@ const EditFactura = () =>{
     }
 
     if (hasError) {
-        return <div>Error al obtener la factura con id {idFactura}</div>;
+        return <div>Error al obtener el cliente con id {idCliente}</div>;
     }
 
     return(
@@ -75,9 +76,9 @@ const EditFactura = () =>{
         initial="hidden"
         animate="visible"
         exit="exit">
-            <InvoiceFormContainer factura={factura}/>
+            <ClienteFormContainer cliente={cliente}/>
         </motion.div>
     )
 }
 
-export default EditFactura;
+export default EditCliente;

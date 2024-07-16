@@ -148,8 +148,6 @@ const ClienteDescripcion = styled.h1`
 const ClienteDetail = () =>{
     const { idCliente } = useParams();
 
-    console.log(idCliente)
-
     const windowSize = useWindowSize();
 
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -176,7 +174,7 @@ const ClienteDetail = () =>{
             setCliente(jsonData.value);
             console.log(jsonData.value)
         } catch (error) {
-            console.error('Error fetching invoices:', error);
+            console.error('Error fetching cliente:', error);
             setHasError(true);
         } finally {
             setIsLoading(false);
@@ -188,7 +186,7 @@ const ClienteDetail = () =>{
     }, []); 
 
     const irEditar = (idFactura) =>{
-        navigate(`/Facturas/Edit/${idFactura}`)
+        navigate(`/Clientes/Edit/${idCliente}`)
     }
     
     if (isLoading) {
@@ -237,7 +235,7 @@ const ClienteDetail = () =>{
                         <div className="invoice-dates">
                             <ClienteInfo
                             className="created-at"
-                            label="Idnetificador"
+                            label="Identificador"
                             value={cliente.identificador}
                             />
                             <ClienteInfo
