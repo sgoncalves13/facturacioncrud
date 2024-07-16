@@ -18,6 +18,8 @@ import { FacturaHome } from './componentes/Facturas/FacturaHome';
 import FacturaDetail from './componentes/Facturas/FacturaDetail';
 import EditFactura from './componentes/Facturas/EditFactura';
 import CreateFactura from './componentes/Facturas/CreateFactura';
+import { ClientesHome } from './componentes/Clientes/ClientesHome';
+import ClienteDetail from './componentes/Clientes/Detalle/ClienteDetail';
 
 const ProtectedRoute = ({ children }) => {
     const { instance } = useMsal();
@@ -78,6 +80,24 @@ const Pages = () => {
             <Route path="/Facturas/:idFactura" element={
                     <ProtectedRoute>
                         <FacturaDetail />
+                    </ProtectedRoute>
+            } />
+
+            <Route path="/Clientes" element={
+                            <ProtectedRoute>
+                                <ClientesHome />
+                            </ProtectedRoute>
+            } />
+
+            {/* <Route path="/Clientes/Edit/:idCliente" element={
+                    <ProtectedRoute>
+                        <EditFactura />
+                    </ProtectedRoute>
+            } /> */}
+
+            <Route path="/Clientes/:idCliente" element={
+                    <ProtectedRoute>
+                        <ClienteDetail />
                     </ProtectedRoute>
             } />
 

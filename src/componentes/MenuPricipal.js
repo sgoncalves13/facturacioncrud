@@ -39,7 +39,7 @@ function MenuPrincipal() {
         <div className="menu-buttons">
           <button className="menu-button" onClick={irArticulos}>Articulos</button>
           <button className="menu-button" onClick={() => navigate(`/Facturas`)}>Facturas</button>
-          <button className="menu-button">Opción 3</button>
+          <button className="menu-button" onClick={() => navigate("/Clientes")}>Clientes</button>
         </div>
       </div>
     );

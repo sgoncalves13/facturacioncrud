@@ -2,13 +2,14 @@ import Header from "../../components/Header/Header";
 import MainContainer from "../../layout/MainContainer";
 import styled, { keyframes } from 'styled-components';
 import deviceSize from '../../styles/breakpoints';
-import { ListadoFacturas } from "./ListadoFacturas";
 
 import React, { useEffect, useState } from "react";
 
 import environment from '../../environment.json'
 import { useNavigate } from "react-router-dom";
-import PaginationFacturas from "./PaginationFactura";
+import { ListadoClientes } from "./ListadoClientes";
+
+import PaginationClientes from "./PaginationClientes"
 
 const HomeHeader = styled.div`
   display: flex;
@@ -46,7 +47,7 @@ const hoverAnimation = keyframes`
   }
 `;
 
-const CreateFacturaButton = styled.button`
+const CreateClienteButton = styled.button`
   height: 40px;
   width: 150px;
   display: inline-block;
@@ -123,10 +124,10 @@ const CreateFacturaButton = styled.button`
 `;
 
 
-export const FacturaHome = () => {
+export const ClientesHome = () => {
 
   const navigate = useNavigate()
-  const [facturas, setFacturas] = useState([]);
+  const [clientes, setClientes] = useState([]);
   const [count, setCount] = useState(null)
   const [countPages, setCountPages] = useState(null)
   const [currentPage, setCurrentPage] = useState(1);
@@ -136,9 +137,9 @@ export const FacturaHome = () => {
 
   const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
 
-    async function fetchFacturas(page, quantityPerPage) {
+    async function fetchClientes(page, quantityPerPage) {
         try {
-            const response = await fetch(`${environment.baseUrl}/Factura/GetAllCabeceraPage?Page=${page}&QuantityPerPage=${quantityPerPage}`, {
+            const response = await fetch(`${environment.baseUrl}/Cliente/GetAllPage?Page=${page}&QuantityPerPage=${quantityPerPage}`, {
                 headers: {
                     'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
                 }
@@ -148,12 +149,12 @@ export const FacturaHome = () => {
             }
             const jsonData = await response.json();
             const values = jsonData.value
-            setFacturas(values.listCabeceras);
+            setClientes(values.listClientes);
             setCount(values.count)
             setCountPages(values.countPages)
             console.log(jsonData)
         } catch (error) {
-            console.error('Error fetching facturas:', error);
+            console.error('Error fetching clientes:', error);
             setHasError(true);
         } finally {
             setIsLoading(false);
@@ -165,7 +166,7 @@ export const FacturaHome = () => {
     };
 
     useEffect(() => {
-        fetchFacturas(currentPage, quantityPerPage);
+        fetchClientes(currentPage, quantityPerPage);
     }, [currentPage, quantityPerPage]); 
 
     return (
@@ -174,19 +175,19 @@ export const FacturaHome = () => {
                 <MainContainer>
                 <HomeHeader>
                     <div>
-                    <Heading>Facturas</Heading>
+                    <Heading>Clientes</Heading>
                     {count !== null ? 
-                    ( <p>Conteo Facturas: {String(count)}</p>):
+                    ( <p>Conteo Clientes: {String(count)}</p>):
                     (<p></p>)
                     }
                     </div>
-                    <CreateFacturaButton onClick={() => {navigate('/Facturas/Create')}}>Crear factura</CreateFacturaButton>
+                    <CreateClienteButton onClick={() => {navigate('/Facturas/Create')}}>Crear Cliente</CreateClienteButton>
                 </HomeHeader>
                 <div className="Pagination">
-                      <PaginationFacturas totalPages={countPages} currentPage={currentPage} onPageChange={handlePageChange}/>
+                      <PaginationClientes totalPages={countPages} currentPage={currentPage} onPageChange={handlePageChange}/>
                 </div>
                 <div>
-                    <ListadoFacturas facturas={facturas} isLoading={isLoading} hasError={hasError}/>
+                    <ListadoClientes clientes={clientes} isLoading={isLoading} hasError={hasError}/>
                 </div>
                 </MainContainer>
             </div>
