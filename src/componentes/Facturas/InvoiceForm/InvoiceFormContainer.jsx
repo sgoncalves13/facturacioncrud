@@ -126,8 +126,8 @@ function FormContainer({factura}) {
       if (response.ok) {
         const data = await response.json();
         console.log(data)
-        const articuloId = data.value.id;
-        alert('Factura con id: ' + String(articuloId) + ' creada exitosamente');
+        const FacturaId = data.value.id;
+        alert('Factura con id: ' + String(FacturaId) + ' creada exitosamente');
         navigate(`/Facturas`);
       } else {
         const errorText = await response.text();

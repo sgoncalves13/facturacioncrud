@@ -181,7 +181,7 @@ export const ClientesHome = () => {
                     (<p></p>)
                     }
                     </div>
-                    <CreateClienteButton onClick={() => {navigate('/Facturas/Create')}}>Crear Cliente</CreateClienteButton>
+                    <CreateClienteButton onClick={() => {navigate('/Clientes/Create')}}>Crear Cliente</CreateClienteButton>
                 </HomeHeader>
                 <div className="Pagination">
                       <PaginationClientes totalPages={countPages} currentPage={currentPage} onPageChange={handlePageChange}/>

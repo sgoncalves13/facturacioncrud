@@ -167,10 +167,53 @@ const SelectBoxLabel = styled.label`
 `;
 
 function InvoiceForm({ initialValues, validationSchema, onSubmit }) {
-;
+
+  let clienteinicial = null
+
+  if (initialValues.padre_id !== null){
+    clienteinicial = {
+      descripcion: initialValues.descripcion,
+      id: initialValues.padre_id
+    }
+  }
+  const [inputValue, setInputValue] = useState(clienteinicial);
+  const [options, setOptions] = useState([]);
+
   const token = localStorage.getItem('idToken'); // Obtiene el token de localStorage
 
-  let navigate = useNavigate()
+  let navigate = useNavigate();
+
+  let debounceTimeout;
+
+async function fetchDescripcionesClientes(texto) {
+
+   if (texto === ""){
+    setOptions([])
+   }
+   else{
+    if (debounceTimeout) {
+      clearTimeout(debounceTimeout);
+  }
+    debounceTimeout = setTimeout(async () => {
+      try {
+          const response = await fetch(`${environment.baseUrl}/Cliente/GetClienteByDesc?strDesc=${texto}`, {
+              headers: {
+                  'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
+              }
+          });
+
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          const jsonData = await response.json();
+          console.log(jsonData)
+          setOptions(jsonData.value)
+      } catch (error) {
+          console.error('Error fetching invoices:', error);
+      }
+    }, 700);
+  }
+}
 
   return (
     <Formik
@@ -178,13 +221,54 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit }) {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
       enableReinitialize={true}>
-      {({ values, errors, setFieldValue, resetForm, handleChange }) => {
+      {({ values, errors, setFieldValue, resetForm, handleChange, touched }) => {
         
         return (
           <Form>
             <FieldSet>
               <Legend>Cliente</Legend>
-              <div>
+              <Autocomplete
+                  id="free-solo-demo"
+                  options={options}
+                  value= {inputValue}
+                  isOptionEqualToValue={(option, value) => option.id === value.id}
+                  onInputChange={(e, newValue) =>{
+                    fetchDescripcionesClientes(newValue);
+                  }}
+                  onChange={(e, newValue) => {
+                    if (newValue === null){
+                      setInputValue(null);
+                      setFieldValue("padre_id", null);
+                    }
+                    else{
+                      setInputValue(newValue)
+                      setFieldValue("padre_id", newValue.id)
+                    }
+                  }}
+                  getOptionLabel={(option) => option.descripcion}
+                  style={{
+                    maxWidth: 500,
+                    borderColor: "#DFE3FA",
+                    marginBottom: 30,
+                    outline: "none", 
+                    ":focus": {
+                      borderColor: "#9277ff",
+                    }
+                  }}
+                  
+                  renderInput={(params) => (
+                    <MUITextfield
+                      {...params}
+                      label="Descripción del padre"
+                      error={errors.padre_id && touched.padre_id}
+                      helperText={touched.padre_id && errors.padre_id}
+                      InputProps={{
+                        ...params.InputProps,
+                      }}
+                    />
+                  )}
+                />
+              {/* <div>
                 <FormTextField
                   label="Padre ID"
                   id="padre_id"
@@ -192,42 +276,7 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit }) {
                   type="number"
                   aria-required="true"
                 />
-              </div>
-              {/* <InvoiceDatesGrid>
-              <div>
-                <DatePickerField
-                  label="Fecha Registro"
-                  name="createdAt"
-                  id="createdAt"
-                  value={values.fecha_registro}
-                  selected={values.fecha_registro}
-                  onChange={setFieldValue}
-                  error={errors.fecha_registro}
-                  disabled={values.status === 'pending'}
-                />
-              </div>
-              <div>
-                <DatePickerField
-                  label="Fecha Emision"
-                  name="paymentDue"
-                  id="paymentDue"
-                  selected={values.fecha_emision}
-                  value={values.fecha_emision}
-                  onChange={setFieldValue}
-                  error={errors.fecha_emision}
-                />
-              </div>
-              <div>
-                <FormTextField
-                  label="Observación"
-                  id="observacion"
-                  name="observacion"
-                  type="text"
-                  placeholder="e.g. Graphic Design Service"
-                  aria-required="true"
-                />
-              </div>
-            </InvoiceDatesGrid> */}
+              </div> */}
               <div>
                 <FormTextField
                   label="Descripción"
@@ -345,6 +394,7 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit }) {
                   className="discard"
                   onClick={() => {
                     resetForm();
+                    setInputValue(clienteinicial);
                   }}>
                   Descartar todos los cambios
                 </Button>

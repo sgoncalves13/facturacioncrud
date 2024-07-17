@@ -1,8 +1,6 @@
 import { Formik, Form, Field } from 'formik';
 import React, { useEffect, useState } from "react";
-import { nanoid } from 'nanoid';
 import styled from 'styled-components';
-import DatePicker from 'react-datepicker';
 import { useNavigate } from 'react-router-dom';
 import MUITextfield from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -106,6 +104,17 @@ const CustomCheckbox = styled(Field)`
   }
 `;
 
+const StyledAutocomplete = styled(Autocomplete)`
+  max-width: 500px;
+  border-color: #DFE3FA;
+  margin-bottom: 30px;
+  outline: none;
+
+  &:focus {
+    border-color: #9277ff;
+  }
+`;
+
 function InvoiceForm({ initialValues, validationSchema, onSubmit, deletedReglones, setDeletedReglones }) {
 
   let clienteinicial = null
@@ -144,7 +153,7 @@ async function fetchDescripcionesClientes(texto) {
               throw new Error('Network response was not ok');
           }
           const jsonData = await response.json();
-          setOptions(jsonData)
+          setOptions(jsonData.value)
       } catch (error) {
           console.error('Error fetching invoices:', error);
       }
@@ -188,6 +197,7 @@ async function fetchDescripcionesClientes(texto) {
                   style={{
                     maxWidth: 500,
                     borderColor: "#DFE3FA",
+                    marginBottom: 30,
                     outline: "none", 
                     ":focus": {
                       borderColor: "#9277ff",
@@ -307,7 +317,6 @@ async function fetchDescripcionesClientes(texto) {
                     resetForm();
                     setDeletedReglones([]);
                     setInputValue(clienteinicial);
-                    //setFieldValue("cliente_id", null);
                   }}>
                   Descartar todos los cambios
                 </Button>

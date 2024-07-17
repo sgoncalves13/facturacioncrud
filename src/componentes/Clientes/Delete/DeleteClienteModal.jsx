@@ -54,22 +54,22 @@ function DeleteInvoiceModal({ id, clienteCodigo, rowversion, isOpen, closeModal 
 
   const deleteInvoice = async () => {
 
-    const FacturaDelete = {
+    const ClienteDelete = {
       id: id,
       rowVersion: rowversion
     }
 
-    const response = await fetch(`${environment.baseUrl}/Factura/DeleteFactura`, {
+    const response = await fetch(`${environment.baseUrl}/Cliente/DeleteCliente`, {
       method: 'DELETE',
       headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
       },
-      body: JSON.stringify(FacturaDelete),
+      body: JSON.stringify(ClienteDelete),
   });
     if (response.ok) {
-      alert('Factura con id: ' +String(id)+ ' eliminada exitosamente');
-      navigate('/Facturas');
+      alert('Cliente con id: ' +String(id)+ ' eliminado exitosamente');
+      navigate('/Clientes');
     } else {
     const errorText = await response.text();
     console.error('Error:', errorText);

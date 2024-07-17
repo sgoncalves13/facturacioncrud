@@ -21,6 +21,7 @@ import CreateFactura from './componentes/Facturas/CreateFactura';
 import { ClientesHome } from './componentes/Clientes/ClientesHome';
 import ClienteDetail from './componentes/Clientes/Detalle/ClienteDetail';
 import EditCliente from './componentes/Clientes/Edit/EditCliente';
+import CreateCliente from './componentes/Clientes/Create/CreateCliente';
 
 const ProtectedRoute = ({ children }) => {
     const { instance } = useMsal();
@@ -100,6 +101,12 @@ const Pages = () => {
                     <ProtectedRoute>
                         <ClienteDetail />
                     </ProtectedRoute>
+            } />
+
+            <Route path="/Clientes/Create" element={
+                            <ProtectedRoute>
+                                <CreateCliente />
+                            </ProtectedRoute>
             } />
 
         </Routes>

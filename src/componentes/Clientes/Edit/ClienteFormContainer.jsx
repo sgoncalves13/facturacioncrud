@@ -37,8 +37,8 @@ const FormHeading = styled.span`
 `;
 
 const initialValuesCliente = {
-  padre_id: 0,
-  inactivo: true,
+  padre_id: null,
+  inactivo: false,
   descripcion: '',
   tipo_identificador: 0,
   identificador: '',
@@ -78,12 +78,6 @@ const validationSchemaCliente = Yup.object({
   pais_id: Yup.number().required('required'),
   email: Yup.string().email('Invalid email').required('required'),
   tipo: Yup.number().required('required'),
-  id: Yup.number().required('required'),
-  usu_ins_id: Yup.string().required('required'),
-  fecha_ins: Yup.date().required('required'),
-  usu_mod_id: Yup.string().nullable(),
-  fecha_mod: Yup.date().nullable(),
-  row_version: Yup.string().required('required')
 });
 
 
@@ -93,105 +87,68 @@ function ClienteFormContainer({cliente}) {
 
   let navigate = useNavigate();
 
-  const handleCreate = async (values) =>{
+  const handleCreate = async (values) => {
 
-    // try{
-    // const response = await fetch(`${environment.baseUrl}/Factura/CreateFactura`, {
-    //   method: 'POST',
-    //   headers: {
-    //       'Content-Type': 'application/json',
-    //       'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
-    //   },
-    //   body: JSON.stringify(values),
-    //   });
+    values.tipo_identificador = Number(values.tipo_identificador)
 
-    //   if (response.ok) {
-    //     const data = await response.json();
-    //     console.log(data)
-    //     const articuloId = data.value.id;
-    //     alert('Factura con id: ' + String(articuloId) + ' creada exitosamente');
-    //     navigate(`/Facturas`);
-    //   } else {
-    //     const errorText = await response.text();
-    //     console.error('Error:', errorText);
-    //     alert('Error al crear la factura' + '. Detalles: ' + errorText);
-    //   }
-    // } catch (error) {
-    //   console.error('Error al realizar la solicitud:', error);
-    //   alert('Error al realizar la solicitud. Por favor, intenta de nuevo más tarde.');
-    // }
+    console.log(values)
+
+    try{
+    const response = await fetch(`${environment.baseUrl}/Cliente/CreateCliente`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Agrega el token al encabezado de autorización
+      },
+      body: JSON.stringify(values),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data)
+        const ClienteId = data.value.id;
+        alert('Cliente con id: ' + String(ClienteId) + ' creado exitosamente');
+        navigate(`/Clientes`);
+      } else {
+        const errorText = await response.text();
+        console.error('Error:', errorText);
+        alert('Error al crear el cliente' + '. Detalles: ' + errorText);
+      }
+    } catch (error) {
+      console.error('Error al realizar la solicitud:', error);
+      alert('Error al realizar la solicitud. Por favor, intenta de nuevo más tarde.');
+    }
+
   };
   
   const handleEdit = async (values) => {
 
+    values.tipo_identificador = Number(values.tipo_identificador)
+
     console.log(values);
-
-    // const facturaData = {
-    //   infoFactura: {
-    //     id: values.id,
-    //     usu_ins_id: values.usu_ins_id,
-    //     fecha_ins: values.fecha_ins,
-    //     usu_mod_id: values.usu_mod_id,
-    //     fecha_mod: values.fecha_mod,
-    //     row_version: values.row_version,
-    //     cliente_id: values.cliente_id,
-    //     fecha_registro: values.fecha_registro,
-    //     fecha_emision: values.fecha_emision,
-    //     observacion: values.observacion,
-    //     codigo: values.codigo,
-    //     anulado: values.anulado,
-    //     monto_impuesto: values.monto_impuesto,
-    //     monto_precio_total: calcTotal(values.reglones),
-    //     reglones: ModifiedNewReglones.map(reglon => ({
-    //       id: reglon.id,
-    //       usu_ins_id: reglon.usu_ins_id,
-    //       fecha_ins: reglon.fecha_ins,
-    //       usu_mod_id: reglon.usu_mod_id,
-    //       fecha_mod: reglon.fecha_mod,
-    //       row_version: reglon.row_version,
-    //       factura_id: reglon.factura_id,
-    //       secuencia: reglon.secuencia,
-    //       art_id: reglon.art_id,
-    //       cantidad: reglon.cantidad,
-    //       unidadmedida_id: reglon.unidadmedida_id,
-    //       precio_unitario: reglon.precio_unitario,
-    //       descuento: reglon.descuento,
-    //       recargo: reglon.recargo,
-    //       impuesto: reglon.impuesto,
-    //       precio_total: reglon.precio_total
-    //     }))
-    //   },
-    //   listReglonesDelete: deletedReglones.map(reglon => ({
-    //     id: reglon.id,
-    //     rowVersion: reglon.row_version
-    //   }))
-    // };
-
-    // console.log(facturaData)
   
-    // try {
-    //   const response = await fetch(`${environment.baseUrl}/Factura/UpdateFactura`, {
-    //     method: 'PUT',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'Authorization': `Bearer ${token}`
-    //     },
-    //     body: JSON.stringify(facturaData),
-    //   });
+    try {
+      const response = await fetch(`${environment.baseUrl}/Cliente/UpdateCliente`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(values),
+      });
   
-    //   if (response.ok) {
-    //     console.log('Factura actualizada');
-    //     alert('Factura con id: ' + String(values.id) + ' actualizada exitosamente');
-    //     navigate(`/Facturas/${values.id}`);
-    //   } else {
-    //     const errorText = await response.text();
-    //     console.error('Error:', errorText);
-    //     alert('Error al actualizar la factura con id: ' + String(values.id) + '. Detalles: ' + errorText);
-    //   }
-    // } catch (error) {
-    //   console.error('Error al realizar la solicitud:', error);
-    //   alert('Error al realizar la solicitud. Por favor, intenta de nuevo más tarde.');
-    // }
+      if (response.ok) {
+        alert('Cliente con id: ' + String(values.id) + ' actualizado exitosamente');
+        navigate(`/Clientes/${values.id}`);
+      } else {
+        const errorText = await response.text();
+        console.error('Error:', errorText);
+        alert('Error al actualizar el cliente con id: ' + String(values.id) + '. Detalles: ' + errorText);
+      }
+    } catch (error) {
+      console.error('Error al realizar la solicitud:', error);
+      alert('Error al realizar la solicitud. Por favor, intenta de nuevo más tarde.');
+    }
   };
 
   return (
