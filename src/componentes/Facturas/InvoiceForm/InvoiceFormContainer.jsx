@@ -183,10 +183,10 @@ function FormContainer({factura}) {
       }
 
     }
-    // console.log("############################")
-    // console.log("REGLONES QUE CAMBIARON O NUEVOS: ",ModifiedNewReglones)
-    // console.log("REGLONES VALUES:", values.reglones)
-    // console.log("REGLONES ELIMINADOS:", deletedReglones)
+    console.log("############################")
+    console.log("REGLONES QUE CAMBIARON O NUEVOS: ",ModifiedNewReglones)
+    console.log("REGLONES VALUES:", values.reglones)
+    console.log("REGLONES ELIMINADOS:", deletedReglones)
 
     const facturaData = {
       infoFactura: {
@@ -212,8 +212,8 @@ function FormContainer({factura}) {
           fecha_mod: reglon.fecha_mod,
           row_version: reglon.row_version,
           factura_id: reglon.factura_id,
-          secuencia: reglon.secuencia,
-          art_id: reglon.art_id,
+          secuencia: Number(reglon.secuencia),
+          art_id: Number(reglon.art_id),
           cantidad: reglon.cantidad,
           unidadmedida_id: reglon.unidadmedida_id,
           precio_unitario: reglon.precio_unitario,
