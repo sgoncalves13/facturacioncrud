@@ -87,10 +87,10 @@ function DeleteInvoiceModal({ id, facturaCodigo, rowversion, isOpen, closeModal 
         </ModalMessage>
         <ButtonContainer>
           <Button variant="secondary" onClick={closeModal}>
-            Cancel
+            Cancelar
           </Button>
           <Button mode={"delete"} variant="warning" onClick={deleteInvoice}>
-            Delete
+            Eliminar
           </Button>
         </ButtonContainer>
       </ModalContainer>
