@@ -172,7 +172,7 @@ function InvoiceForm({ initialValues, validationSchema, onSubmit }) {
 
   if (initialValues.padre_id !== null){
     clienteinicial = {
-      descripcion: initialValues.descripcion,
+      descripcion: initialValues.padre_descripcion,
       id: initialValues.padre_id
     }
   }

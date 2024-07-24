@@ -4,6 +4,10 @@ import { PublicClientApplication, EventType } from '@azure/msal-browser';
 import { BrowserRouter } from 'react-router-dom';
 import { msalConfig } from './authConfig';
 import App from './App';
+import 'devextreme/dist/css/dx.light.css';
+import '@devexpress/analytics-core/dist/css/dx-analytics.common.css';
+import '@devexpress/analytics-core/dist/css/dx-analytics.light.css';
+import 'devexpress-reporting/dist/css/dx-webdocumentviewer.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/index.css';

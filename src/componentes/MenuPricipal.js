@@ -40,6 +40,7 @@ function MenuPrincipal() {
           <button className="menu-button" onClick={irArticulos}>Articulos</button>
           <button className="menu-button" onClick={() => navigate(`/Facturas`)}>Facturas</button>
           <button className="menu-button" onClick={() => navigate("/Clientes")}>Clientes</button>
+          <button className="menu-button" onClick={() => navigate("/ReportEditor")}>Editar reporte factura</button>
         </div>
       </div>
     );

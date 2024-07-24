@@ -220,6 +220,13 @@ const FacturaDetail = () =>{
                     <InvoiceStatusBadge status={factura.anulado.toString()} />
                         <InvoiceActions>
                             <Button
+                                variant="warning"
+                                aria-label="Print Invoice"
+                                mode = "print"
+                                onClick={() => navigate(`/Report/${idFactura}`)}>
+                                Imprimir
+                            </Button>
+                            <Button
                             variant="secondary"
                             aria-label="Edit Invoice"
                             mode = "edit"

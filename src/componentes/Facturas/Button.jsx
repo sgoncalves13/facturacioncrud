@@ -7,6 +7,9 @@ const colorButton = (mode) =>{
   if (mode == "delete"){
     return "#F24337"
   }
+  else if (mode == "print"){
+    return '#60B681'
+  }
   else {
     return "#7C5DFA"
   }
@@ -15,6 +18,9 @@ const colorButton = (mode) =>{
 const HovercolorButton = (mode) =>{
   if (mode == "delete"){
     return "rgba(242, 67, 55, 0.69)"
+  }
+  else if (mode == "print"){
+    return 'rgba(96, 182, 129, 0.69)'
   }
   else {
     return "rgba(124, 93, 250, 0.69)"
