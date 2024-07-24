@@ -232,14 +232,14 @@ const FacturaDetail = () =>{
                             mode = "edit"
                             onClick={() => irEditar(factura.id)}
                             >
-                            Edit
+                            Editar
                             </Button>
                             <Button
                                 variant="warning"
                                 aria-label="Delete Invoice"
                                 mode = "delete"
                                 onClick={() => setIsDeleteModalOpen(true)}>
-                                Delete
+                                Eliminar
                             </Button>
                         </InvoiceActions>
                     </Header>

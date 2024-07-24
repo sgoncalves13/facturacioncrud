@@ -41,6 +41,9 @@ const TextInput = styled.input`
   &:placeholder {
     color: rgba(12, 14, 22, 0.4);
   }
+  &:disabled {
+    background-color: #f0f0f0;
+  }
 `;
 
 function TextField({ label, type = 'text', ...props }) {

@@ -92,13 +92,13 @@ const ClienteDesc = styled(ClienteTypeIden)`
 
 const ClienteIdentificador = styled.span`
   display: block;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 0.9rem;
+  font-weight: 500;
   line-height: 1;
   letter-spacing: -0.8px;
-  color: black;
+  color: #5F5F5F;
   @media screen and (min-width: ${deviceSize.md}) {
-    text-align: right;
+    text-align: left;
   }
 `;
 

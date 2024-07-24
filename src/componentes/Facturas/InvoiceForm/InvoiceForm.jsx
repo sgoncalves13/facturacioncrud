@@ -307,7 +307,7 @@ async function fetchDescripcionesClientes(texto) {
                       }
                     }
                   }>
-                  Cancel
+                  Cancelar
                 </Button>
                 <Button
                   type="button"
@@ -321,7 +321,7 @@ async function fetchDescripcionesClientes(texto) {
                   Descartar todos los cambios
                 </Button>
                 <Button type="submit" className="save-send">
-                  Save Changes
+                  Guardar cambios
                 </Button>
               </FormBottom>
           </Form>

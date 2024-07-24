@@ -215,14 +215,14 @@ const ClienteDetail = () =>{
                             mode = "edit"
                             onClick={() => irEditar(cliente.id)}
                             >
-                            Edit
+                            Editar
                             </Button>
                             <Button
                                 variant="warning"
                                 aria-label="Delete Invoice"
                                 mode = "delete"
                                 onClick={() => setIsDeleteModalOpen(true)}>
-                                Delete
+                                Eliminar
                             </Button>
                         </FacturaActions>
                     </Header>
@@ -234,20 +234,25 @@ const ClienteDetail = () =>{
                         </FacturaIdName>
                         <div className="invoice-dates">
                             <ClienteInfo
-                            className="created-at"
-                            label="Identificador"
-                            value={cliente.identificador}
-                            />
-                            <ClienteInfo
                             className="payment-due"
                             label="Tipo Identificador"
                             value={tipo_identificador_nombre(cliente.tipo_identificador)}
+                            />
+                          <ClienteInfo
+                            className="created-at"
+                            label="Identificador"
+                            value={cliente.identificador}
                             />
                         </div>
                         <div className="client-name-address">
                             <ClienteInfo className="client-name" label="Email" value={cliente.email} />
                         </div>
-                        <ClienteInfo className="client-email" label="Usuario Modificar" value={cliente.usu_mod_id} />
+                        <ClienteInfo className="client-email" label="Usuario Modificar" value={cliente.usu_mod_id}>
+                        <ClienteInfo
+                            label="Fecha Modificación"
+                            value={formatDate(cliente.fecha_mod)}
+                            />
+                        </ClienteInfo>
                         </DetailsCardGrid>
                     </DetailsCard>
                     </>

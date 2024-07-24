@@ -268,15 +268,6 @@ async function fetchDescripcionesClientes(texto) {
                     />
                   )}
                 />
-              {/* <div>
-                <FormTextField
-                  label="Padre ID"
-                  id="padre_id"
-                  name="padre_id"
-                  type="number"
-                  aria-required="true"
-                />
-              </div> */}
               <div>
                 <FormTextField
                   label="Descripción"
@@ -386,7 +377,7 @@ async function fetchDescripcionesClientes(texto) {
                       }
                     }
                   }>
-                  Cancel
+                  Cancelar
                 </Button>
                 <Button
                   type="button"
@@ -399,7 +390,7 @@ async function fetchDescripcionesClientes(texto) {
                   Descartar todos los cambios
                 </Button>
                 <Button type="submit" className="save-send">
-                  Save Changes
+                  Guardar cambios
                 </Button>
               </FormBottom>
           </Form>
