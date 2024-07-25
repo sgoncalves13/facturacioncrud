@@ -37,7 +37,7 @@ function MenuPrincipal() {
         <div className="menu">
         <h1 className="menu-title">Menú Principal</h1>
         <div className="menu-buttons">
-          <button className="menu-button" onClick={irArticulos}>Articulos</button>
+          <button className="menu-button" onClick={irArticulos}>Artículos</button>
           <button className="menu-button" onClick={() => navigate(`/Facturas`)}>Facturas</button>
           <button className="menu-button" onClick={() => navigate("/Clientes")}>Clientes</button>
           <button className="menu-button" onClick={() => navigate("/ReportEditor")}>Editar reporte factura</button>
