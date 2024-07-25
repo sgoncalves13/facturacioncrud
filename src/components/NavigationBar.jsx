@@ -70,7 +70,7 @@ export const NavigationBar = () => {
                 </a>
                 <AuthenticatedTemplate>
                     <Nav.Link className="navbarButton" href="/Menu">
-                        Menu Principal
+                        Menú Principal
                     </Nav.Link>
                     <Nav.Link className="navbarButton" href="/profile">
                         Perfil
